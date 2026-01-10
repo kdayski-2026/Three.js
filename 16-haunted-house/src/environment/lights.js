@@ -6,8 +6,8 @@ import gui from '../core/gui'
  */
 // Ambient light
 const ambientParams = {
-	color: '#86cdff',
-	intensity: 0.275
+	color: '#5778c7',
+	intensity: 0.57
 }
 
 const ambientLight = new THREE.AmbientLight(
@@ -17,7 +17,7 @@ const ambientLight = new THREE.AmbientLight(
 
 // Directional light
 const directionalParams = {
-	color: '#86cdff',
+	color: '#f87f72',
 	intensity: 1,
 	positionX: 3,
 	positionY: 2,
@@ -47,12 +47,16 @@ directionalLight.position.set(
 // Debug
 const lightsGui = gui.addFolder('Lights')
 lightsGui.add(directionalLight, 'castShadow').name('Sun cast shadow')
-lightsGui.addColor(directionalLight, 'color').name('Sun color')
+lightsGui.addColor(directionalParams, 'color').name('Sun color').onChange(() => {
+	directionalLight.color.set(directionalParams.color)
+})
 lightsGui.add(directionalLight, 'intensity').min(0).max(1).step(0.001).name('Sun intensity')
 lightsGui.add(directionalLight.position, 'x').min(0).max(10).step(0.001).name('Sun position X')
 lightsGui.add(directionalLight.position, 'y').min(0).max(10).step(0.001).name('Sun position Y')
 lightsGui.add(directionalLight.position, 'z').min(0).max(10).step(0.001).name('Sun position Z')
-lightsGui.addColor(ambientLight, 'color').name('Reflection color')
+lightsGui.addColor(ambientParams, 'color').name('Reflection color').onChange(() => {
+	ambientLight.color.set(ambientParams.color)
+})
 lightsGui.add(ambientLight, 'intensity').min(0).max(1).step(0.001).name('Reflection intensity')
 
 export {

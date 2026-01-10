@@ -47,4 +47,6 @@ const roofGui = gui.addFolder('Roof')
 roofGui.add(roof.material, 'wireframe').name('Wireframe')
 roofGui.add(roof, 'castShadow').name('Can receive shadow')
 
+roofGui.open(false)
+
 export default roof

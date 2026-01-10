@@ -7,7 +7,7 @@ import {
 	doorMetalnessTexture,
 	doorNormalTexture,
 	doorRoughnessTexture,
-	doorHeightTexture
+	doorHeightTexture,
 } from '../../core/textures'
 
 doorColorTexture.colorSpace = THREE.SRGBColorSpace
@@ -52,21 +52,35 @@ container.add(door)
 // Door light
 const lightParams = {
 	color: '#ff7d46',
-	intensity: 5,
+	intensity: 10,
+	distance: 3.5,
+	angle: Math.PI * 0.25,
+	penumbra: 0.25,
+	decay: 1,
 	positionX: 0,
-	positionY: 2.2,
-	positionZ: 3
+	positionY: 2.5,
+	positionZ: 2.25
 }
 
-const doorLight = new THREE.PointLight(
+const doorLight = new THREE.SpotLight(
 	lightParams.color,
-	lightParams.intensity
+	lightParams.intensity,
+	lightParams.distance,
+	lightParams.angle,
+	lightParams.penumbra,
+	lightParams.decay,
 )
+
 doorLight.position.set(
 	lightParams.positionX,
 	lightParams.positionY,
 	lightParams.positionZ
 )
+doorLight.target.position.x = lightParams.positionX
+doorLight.target.position.y = 0
+doorLight.target.position.z = lightParams.positionZ
+
+container.add(doorLight.target)
 container.add(doorLight)
 
 // Debug
@@ -75,8 +89,17 @@ doorGui.add(door.material, 'wireframe').name('Wireframe')
 doorGui.add(door.position, 'x').min(-1.4).max(1.4).step(0.001).name('Position X')
 doorGui.addColor(doorLight, 'color').name('Light color')
 doorGui.add(doorLight, 'intensity').min(0).max(10).step(0.001).name('Light intensity')
+doorGui.add(doorLight, 'distance').min(0).max(10).step(0.001).name('Light distance')
+doorGui.add(doorLight, 'angle').min(0).max(10).step(0.001).name('Light angle')
+doorGui.add(doorLight, 'penumbra').min(0).max(10).step(0.001).name('Light penumbra')
+doorGui.add(doorLight, 'decay').min(0).max(10).step(0.001).name('Light decay')
 doorGui.add(doorLight.position, 'x').min(-3).max(3).step(0.001).name('Position X')
 doorGui.add(doorLight.position, 'y').min(-3).max(3).step(0.001).name('Position Y')
 doorGui.add(doorLight.position, 'z').min(-3).max(3).step(0.001).name('Position Z')
+doorGui.add(doorLight.target.position, 'x').min(-3).max(3).step(0.001).name('Target position X')
+doorGui.add(doorLight.target.position, 'y').min(-3).max(3).step(0.001).name('Target position Y')
+doorGui.add(doorLight.target.position, 'z').min(-3).max(3).step(0.001).name('Target position Z')
+
+doorGui.open(false)
 
 export default container

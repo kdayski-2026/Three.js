@@ -1,7 +1,7 @@
 import GUI from 'lil-gui'
 
 const gui = new GUI()
-gui.show(gui._hidden)
+// gui.show(gui._hidden)
 
 window.addEventListener('keypress', (event) => {
 	event.preventDefault()

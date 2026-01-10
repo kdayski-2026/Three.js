@@ -78,5 +78,6 @@ bushGui.addColor(bushMaterial, 'color').name('Color')
 bushGui.add(bushParams, 'radius').name('Radius').min(0).max(10).step(0.001).onFinishChange(update)
 bushGui.add(bushParams, 'segments').name('Segments').min(0).max(124).step(1).onFinishChange(update)
 
+bushGui.open(false)
 
 export default bushes

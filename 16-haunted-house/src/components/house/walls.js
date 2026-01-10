@@ -40,4 +40,6 @@ wallsGui.add(walls.material, 'wireframe').name('Wireframe')
 wallsGui.add(walls, 'receiveShadow').name('Can receive shadow')
 wallsGui.add(walls, 'castShadow').name('Can cast shadow')
 
+wallsGui.open(false)
+
 export default walls

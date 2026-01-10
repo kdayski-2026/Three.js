@@ -5,6 +5,10 @@ import { Timer } from 'three/addons/misc/Timer.js'
 
 // Core
 import scene from './core/scene'
+import renderer from './core/renderer'
+import canvas from './core/canvas'
+import sizes from './core/sizes'
+import camera from './core/camera'
 
 // Environment
 import { ambientLight, directionalLight } from './environment/lights'
@@ -16,20 +20,13 @@ import sky from './environment/sky'
 import floor from './components/floor'
 import house from './components/house/house'
 import graves from './components/graves'
+import lamp from './components/lamp'
 
-// Canvas
-const canvas = document.querySelector('canvas.webgl')
-
-scene.add(ambientLight, directionalLight, ...ghosts, sky)
-scene.add(floor, house, graves)
-
-/**
- * Sizes
- */
-const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight
-}
+scene.add(camera)
+scene.add(ambientLight, directionalLight,
+    // ...ghosts,
+    sky)
+scene.add(floor, house, graves, lamp)
 
 window.addEventListener('resize', () => {
     // Update sizes
@@ -45,28 +42,9 @@ window.addEventListener('resize', () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 4
-camera.position.y = 2
-camera.position.z = 5
-scene.add(camera)
-
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
-
-/**
- * Renderer
- */
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-})
-renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 /**
  * Shadows

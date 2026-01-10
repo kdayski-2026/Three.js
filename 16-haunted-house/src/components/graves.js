@@ -82,4 +82,6 @@ graveGui.add(graveParams, 'width').name('Width').min(0).max(1).step(0.001).onFin
 graveGui.add(graveParams, 'height').name('Height').min(0).max(1).step(0.001).onFinishChange(update)
 graveGui.add(graveParams, 'depth').name('Depth').min(0).max(1).step(0.001).onFinishChange(update)
 
+graveGui.open(false)
+
 export default graves

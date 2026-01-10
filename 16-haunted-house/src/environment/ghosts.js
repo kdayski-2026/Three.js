@@ -51,5 +51,7 @@ ghostsGui.addColor(ghost3, 'color').name('Ghost 3 color')
 ghostsGui.add(ghostsParams, 'intensity').min(0).max(10).name('Intensity').onChange(update)
 ghostsGui.add(ghostsParams, 'castShadow').name('Cast shadow').onChange(update)
 
+ghostsGui.open(false)
+
 
 export default [ghost1, ghost2, ghost3]

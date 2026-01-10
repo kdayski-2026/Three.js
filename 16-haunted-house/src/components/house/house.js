@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import scene from '../../core/scene'
 import walls from './walls'
 import roof from './roof'
 import door from './door'

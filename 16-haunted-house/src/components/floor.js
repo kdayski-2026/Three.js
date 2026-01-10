@@ -88,4 +88,6 @@ floorGui.add(floorParams, 'segments').min(10).max(1000).step(1).name('Segments')
 floorGui.add(floorParams, 'displacementScale').min(0).max(0.5).step(0.001).name('Displacement scale').onChange(updateFloorMaterial)
 floorGui.add(floorParams, 'displacementBias').min(-0.5).max(0.5).step(0.001).name('Displacement bias').onChange(updateFloorMaterial)
 
+floorGui.open(false)
+
 export default floor

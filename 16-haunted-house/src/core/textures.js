@@ -25,6 +25,10 @@ const bushNormalTexture = textureLoader.load('./bush/leaves_forest_ground_1k/lea
 const graveColorTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp')
 const graveARMTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp')
 const graveNormalTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp')
+const lampColorTexture = textureLoader.load('./lamp/rusty_metal_04_diff_1k.webp')
+const lampARMTexture = textureLoader.load('./lamp/rusty_metal_04_arm_1k.webp')
+const lampNormalTexture = textureLoader.load('./lamp/rusty_metal_04_nor_gl_1k.webp')
+const lampDisplacementTexture = textureLoader.load('./lamp/rusty_metal_04_disp_1k.webp')
 
 export {
 	doorColorTexture,
@@ -50,5 +54,9 @@ export {
 	bushNormalTexture,
 	graveColorTexture,
 	graveARMTexture,
-	graveNormalTexture
+	graveNormalTexture,
+	lampColorTexture,
+	lampARMTexture,
+	lampNormalTexture,
+	lampDisplacementTexture
 }
