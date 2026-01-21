@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js'
+import { GroundedSkybox } from 'three/addons/objects/GroundedSkybox.js'
 import GUI from 'lil-gui'
 
 /**
@@ -76,15 +77,59 @@ envs.blockadeLabs = textureLoader.load('/environmentMaps/blockadesLabsSkybox/ani
 envs.blockadeLabs.mapping = THREE.EquirectangularReflectionMapping
 envs.blockadeLabs.colorSpace = THREE.SRGBColorSpace
 
-debugObject.environment = 'blockadeLabs'
+// Ground projected skybox
+let skybox
+rgbeLoader.load('/environmentMaps/2/2k.hdr', (environmentMap) => {
+    environmentMap.mapping = THREE.EquirectangularReflectionMapping
+    envs.groundProjectedSkybox = environmentMap
+    skybox = new GroundedSkybox(envs.groundProjectedSkybox, 15, 70)
+    skybox.position.y = 15
+})
+
+/**
+ * Real time environment map
+ */
+envs.realTime = textureLoader.load('/environmentMaps/blockadesLabsSkybox/interior_views_cozy_wood_cabin_with_cauldron_and_p.jpg')
+envs.realTime.mapping = THREE.EquirectangularReflectionMapping
+envs.realTime.colorSpace = THREE.SRGBColorSpace
+
+// Holy donut
+const holyDonut = new THREE.Mesh(
+    new THREE.TorusGeometry(8, 0.5),
+    new THREE.MeshBasicMaterial({ color: new THREE.Color(10, 4, 2) })
+)
+holyDonut.layers.enable(1)
+holyDonut.position.y = 3.5
+scene.add(holyDonut)
+
+// Cube render target
+const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(
+    256,
+    {
+        type: THREE.HalfFloatType
+    }
+)
+
+// Cube camera
+const cubeCamera = new THREE.CubeCamera(0.1, 100, cubeRenderTarget)
+cubeCamera.layers.set(1)
+
+debugObject.environment = 'realTime'
 const update = () => {
+    if (skybox) scene.remove(skybox)
     scene.background = envs[debugObject.environment]
     scene.environment = envs[debugObject.environment]
-    if (debugObject.environment === 'blender') {
+    if (['blender', 'groundProjectedSkybox'].includes(debugObject.environment)) {
         scene.background = null
     }
+    if (debugObject.environment === 'realTime') {
+        scene.environment = cubeRenderTarget.texture
+    }
+    if (debugObject.environment === 'groundProjectedSkybox') {
+        scene.add(skybox)
+    }
 }
-gui.add(debugObject, 'environment', ['nvidiaCanvas', 'blender', 'cubeTexture', 'blockadeLabs']).onChange(update)
+gui.add(debugObject, 'environment', ['nvidiaCanvas', 'blender', 'cubeTexture', 'blockadeLabs', 'groundProjectedSkybox', 'realTime']).onChange(update)
 update()
 
 /**
@@ -165,6 +210,12 @@ const clock = new THREE.Clock()
 const tick = () => {
     // Time
     const elapsedTime = clock.getElapsedTime()
+
+    // Real time environment map
+    if (holyDonut) {
+        holyDonut.rotation.x = Math.sin(elapsedTime) * 2
+        cubeCamera.update(renderer, scene)
+    }
 
     if (!init && envs[debugObject.environment]) {
         update()
