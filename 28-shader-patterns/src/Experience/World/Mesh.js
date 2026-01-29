@@ -9,10 +9,12 @@ export default class Mesh {
 	constructor() {
 		this.experience = new Experience()
 		this.scene = this.experience.scene
+		this.time = this.experience.time
 		this.debug = this.experience.debug
 		this.fragment = new Fragment()
 
 		this.setInstance()
+		this.setAnimation()
 		if (this.debug.active) {
 			this.setDebug()
 		}
@@ -41,6 +43,13 @@ export default class Mesh {
 		this.scene.add(this.mesh)
 	}
 
+	setAnimation() {
+		this.animation = {}
+		this.animation.speed = 0.0025
+		this.material.uniforms.uTime = { value: 0.0 }
+		this.material.uniforms.uFrequency = { value: new THREE.Vector2(25, 12.5) }
+	}
+
 	setDebug() {
 		const debugObject = {}
 		debugObject.fragment = this.fragment.active
@@ -53,6 +62,8 @@ export default class Mesh {
 				side: THREE.DoubleSide
 			})
 			this.mesh.material = this.material
+			this.mesh.material.uniforms.uTime = { value: 0.0 }
+			this.mesh.material.uniforms.uFrequency = { value: new THREE.Vector2(25, 12.5) }
 			this.material.needsUpdate = true
 		}
 
@@ -60,6 +71,6 @@ export default class Mesh {
 	}
 
 	update() {
-
+		this.material.uniforms.uTime.value = this.time.elapsed * this.animation.speed
 	}
 }

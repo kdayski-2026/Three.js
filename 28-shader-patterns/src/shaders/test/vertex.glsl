@@ -1,8 +1,22 @@
+uniform vec2 uFrequency;
+uniform float uTime;
+
 varying vec2 vUv;
+varying float vElevation;
 
-void main()
-{
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+void main() {
+	vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
-    vUv = uv;
+	float elevation = abs(sin(modelPosition.x * uFrequency.x - uTime) * 0.1);
+	elevation += abs(cos(modelPosition.x * uFrequency.x - uTime) * 0.1);
+
+	modelPosition.y += elevation;
+
+	vec4 viewPosition = viewMatrix * modelPosition;
+	vec4 projectedPosition = projectionMatrix * viewPosition;
+
+	gl_Position = projectedPosition;
+
+	vUv = uv;
+	vElevation = elevation;
 }
