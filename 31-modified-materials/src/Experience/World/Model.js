@@ -110,6 +110,7 @@ export default class Model {
 	setDebug() {
 		this.debug.ui.add(this.uniforms.uSpinPower, 'value', 0, 10, 0.001).name('uSpinPower')
 		this.debug.ui.add(this.uniforms.uStretchPower, 'value', 0, 10, 0.001).name('uStretchPower')
+		this.debug.ui.addColor(this.mesh.material, 'color')
 	}
 
 	update() {
