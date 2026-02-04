@@ -12,6 +12,30 @@ export default class Material {
 
 		this.materialParameters = {}
 		this.materialParameters.color = '#70c1ff'
+		this.sounds = [
+			new Audio('/sounds/error-glitch.mp3'),
+			new Audio('/sounds/VGT - Digital TV - 12.mp3'),
+			new Audio('/sounds/VGT - Digital TV Elements - 1.mp3'),
+			new Audio('/sounds/VGT - Flash - 7.mp3'),
+			new Audio('/sounds/VGT - Noise - 5.mp3'),
+			new Audio('/sounds/virtual_vibes-glitch-sound-effect-hd-379466.mp3')
+		]
+
+		this.sounds.forEach(sound => {
+			sound.preload = 'auto'
+			sound.load()
+		})
+
+		this.autoplay = new Audio('/sounds/space.mp3')
+		this.autoplay.preload = 'auto'
+		this.autoplay.load()
+		this.autoplay.play()
+		this.autoplay.volume = 0.025
+		this.autoplay.loop = true
+
+		this.lastGlitchStrength = 0
+		this.soundCooldown = 0.1
+		this.lastSoundTime = 0
 
 		this.setInstance()
 		if (this.debug.active) this.setDebug()
@@ -46,5 +70,27 @@ export default class Material {
 
 	update() {
 		this.instance.uniforms.uTime.value = this.time.elapsed
+
+		const glitchTime = this.time.elapsed
+		let glitchStrength = Math.sin(glitchTime) + Math.sin(glitchTime * 3.45) + Math.sin(glitchTime * 8.76)
+		glitchStrength /= 3.0
+
+		glitchStrength = Math.max(0, Math.min(1, (glitchStrength - 0.3) / (1.0 - 0.3)))
+
+		const currentTime = this.time.elapsed
+		if (
+			currentTime - this.lastSoundTime > this.soundCooldown
+		) {
+			this.playGlitchSound(glitchStrength)
+			this.lastSoundTime = currentTime
+		}
+		this.lastGlitchStrength = glitchStrength
+	}
+
+	playGlitchSound(glitchStrength) {
+		this.sound = this.sounds[Math.floor(Math.random() * this.sounds.length)]
+		this.sound.currentTime = 0
+		this.sound.volume = Math.min(glitchStrength, 0.1)
+		this.sound.play()
 	}
 }
