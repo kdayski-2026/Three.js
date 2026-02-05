@@ -10,7 +10,7 @@ void main() {
 	vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
 	// Glitch
-	float glitchTime = uTime - modelPosition.y;
+	float glitchTime = uTime * 0.5 - modelPosition.y;
 	float glitchStrength = sin(glitchTime) + sin(glitchTime * 3.45) + sin(glitchTime * 8.76);
 	glitchStrength /= 3.0;
 	glitchStrength = smoothstep(0.3, 1.0, glitchStrength);
