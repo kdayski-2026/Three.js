@@ -4,9 +4,12 @@ import Experience from '../Experience'
 import vertexShader from '../../shaders/water/vertex.glsl'
 import fragmentShader from '../../shaders/water/fragment.glsl'
 
-
+let instance
 export default class Water {
 	constructor() {
+		if (instance) return instance
+		instance = this
+
 		this.experience = new Experience()
 
 		this.scene = this.experience.scene
@@ -40,21 +43,21 @@ export default class Water {
 	setUniforms() {
 		this.uniforms = {}
 
-		this.uniforms.uTime = { value: 0 },
+		this.uniforms.uTime = { value: 0 }
 
-			this.uniforms.uBigWavesElevation = { value: 0.2 },
-			this.uniforms.uBigWavesFrequency = { value: new THREE.Vector2(4, 1.5) },
-			this.uniforms.uBigWavesSpeed = { value: 0.75 },
+		this.uniforms.uBigWavesElevation = { value: 0.2 }
+		this.uniforms.uBigWavesFrequency = { value: new THREE.Vector2(4, 1.5) }
+		this.uniforms.uBigWavesSpeed = { value: 0.75 }
 
-			this.uniforms.uSmallWavesElevation = { value: 0.15 },
-			this.uniforms.uSmallWavesFrequency = { value: 3 },
-			this.uniforms.uSmallWavesSpeed = { value: 0.2 },
-			this.uniforms.uSmallIterations = { value: 4 },
+		this.uniforms.uSmallWavesElevation = { value: 0.15 }
+		this.uniforms.uSmallWavesFrequency = { value: 3 }
+		this.uniforms.uSmallWavesSpeed = { value: 0.2 }
+		this.uniforms.uSmallIterations = { value: 4 }
 
-			this.uniforms.uDepthColor = { value: new THREE.Color(this.parameters.depthColor) },
-			this.uniforms.uSurfaceColor = { value: new THREE.Color(this.parameters.surfaceColor) },
-			this.uniforms.uColorOffset = { value: 0.925 },
-			this.uniforms.uColorMultiplier = { value: 1 }
+		this.uniforms.uDepthColor = { value: new THREE.Color(this.parameters.depthColor) }
+		this.uniforms.uSurfaceColor = { value: new THREE.Color(this.parameters.surfaceColor) }
+		this.uniforms.uColorOffset = { value: 0.925 }
+		this.uniforms.uColorMultiplier = { value: 1 }
 	}
 
 	setMaterial() {

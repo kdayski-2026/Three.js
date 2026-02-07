@@ -1,4 +1,5 @@
 import Experience from "../Experience";
+import Ship from "./Ship";
 import Water from "./Water";
 
 export default class World {
@@ -18,9 +19,11 @@ export default class World {
 
 	setWorld() {
 		this.water = new Water()
+		this.ship = new Ship()
 	}
 
 	update() {
 		if (this.water) this.water.update()
+		if (this.ship) this.ship.update()
 	}
 }
