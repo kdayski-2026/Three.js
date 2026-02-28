@@ -1,32 +1,50 @@
-import { useFrame } from '@react-three/fiber';
+import { extend, useFrame, useThree } from '@react-three/fiber';
 import { useRef } from 'react';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import CustomObject from './CustomObject';
+
+extend({ OrbitControls });
 
 export default function Experience() {
   const cubeRef = useRef();
   const groupRef = useRef();
+  const { camera, gl } = useThree();
 
   useFrame((state, delta) => {
-    // groupRef.current.rotation.y += delta;
     cubeRef.current.rotation.y += delta;
+
+    // const angle = state.clock.elapsedTime;
+    // camera.position.x = Math.sin(angle) * 8;
+    // camera.position.z = Math.cos(angle) * 8;
+    // camera.lookAt(0, 0, 0);
+
+    // groupRef.current.rotation.y += delta;
   });
 
   return (
     <>
+      <orbitControls args={[camera, gl.domElement]} enableDamping />
+
+      <directionalLight position={[1, 2, 3]} intensity={4.5} />
+      <ambientLight intensity={1.5} />
+
       <group ref={groupRef}>
         <mesh position-x={-2}>
           <sphereGeometry />
-          <meshBasicMaterial color={'orange'} />
+          <meshStandardMaterial color={'orange'} />
         </mesh>
         <mesh ref={cubeRef} position-x={2} scale={1.5} rotation-y={Math.PI * 0.25}>
           <boxGeometry />
-          <meshBasicMaterial color={'mediumpurple'} />
+          <meshStandardMaterial color={'mediumpurple'} />
         </mesh>
       </group>
 
       <mesh position-y={-1} scale={10} rotation-x={-Math.PI * 0.5}>
         <planeGeometry />
-        <meshBasicMaterial color={'greenyellow'} />
+        <meshStandardMaterial color={'greenyellow'} />
       </mesh>
+
+      <CustomObject />
     </>
   );
 }
