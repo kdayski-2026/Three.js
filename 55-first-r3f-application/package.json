@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "deploy": "vercel --prod"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "4.3",
@@ -16,6 +17,7 @@
     "@react-three/fiber": "9.1",
     "react": "19.0",
     "react-dom": "19.0",
-    "three": "^0.174.0"
+    "three": "^0.174.0",
+    "vercel": "^50.25.4"
   }
 }
