@@ -3,6 +3,8 @@ import { OrbitControls } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import Model from './Model';
 import Placeholder from './Placeholder';
+import Hamburger from './Hamburger';
+import Fox from './Fox';
 
 export default function Experience() {
   return (
@@ -11,7 +13,7 @@ export default function Experience() {
 
       <OrbitControls makeDefault />
 
-      <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} />
+      <directionalLight castShadow position={[1, 2, 3]} intensity={4.5} shadow-normalBias={0.04} />
       <ambientLight intensity={1.5} />
 
       <mesh receiveShadow position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
@@ -20,7 +22,11 @@ export default function Experience() {
       </mesh>
 
       <Suspense fallback={<Placeholder />}>
-        <Model />
+        <Hamburger scale={0.35} />
+      </Suspense>
+
+      <Suspense fallback={<Placeholder />}>
+        <Fox />
       </Suspense>
     </>
   );
