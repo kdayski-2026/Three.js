@@ -1,0 +1,52 @@
+html,
+body,
+#root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1d1a24;
+}
+
+.r3f {
+  touch-action: none;
+}
+
+.htmlScreen iframe {
+  width: 1024px;
+  height: 670px;
+  border: none;
+  border-radius: 20px;
+  background: #000000;
+}
+
+.loader-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: #000000;
+  z-index: 1;
+}
+
+.loader-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 6px solid #ffffff33;
+  border-top-color: #5900ff;
+  border-right-color: #5900ff;
+  animation: loader-spin 0.9s linear infinite;
+}
+
+@keyframes loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
