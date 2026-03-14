@@ -1,14 +1,7 @@
-import {
-  PresentationControls,
-  useGLTF,
-  Environment,
-  Float,
-  ContactShadows,
-  Text,
-} from '@react-three/drei';
+import { PresentationControls, useGLTF, Environment, Float, ContactShadows, Text } from '@react-three/drei';
 import Top from './Notebook/Top';
 import Bottom from './Notebook/Bottom';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useThree } from '@react-three/fiber';
 import gsap from 'gsap';
 import { useControls } from 'leva';
@@ -17,6 +10,34 @@ export default function Experience() {
   const computer = useGLTF('./macbook_model.gltf');
   const [isOpen, setIsOpen] = useState(false);
   const { camera } = useThree();
+  const [scale, setScale] = useState(0.6);
+
+  useEffect(() => {
+    const calculateScale = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      const baseWidth = 1920;
+      const baseHeight = 1080;
+      const baseScale = 1.4;
+
+      const scaleX = (width / baseWidth) * baseScale;
+      const scaleY = (height / baseHeight) * baseScale;
+      const newScale = Math.min(scaleX, scaleY);
+
+      const minScale = 0.3;
+      const maxScale = 1.4;
+
+      setScale(Math.max(minScale, Math.min(maxScale, newScale)));
+    };
+
+    calculateScale();
+    window.addEventListener('resize', calculateScale);
+
+    return () => {
+      window.removeEventListener('resize', calculateScale);
+    };
+  }, []);
 
   const top = useMemo(() => {
     let top = null;
@@ -79,8 +100,10 @@ export default function Experience() {
 
       <PresentationControls global polar={[-0.4, 0.2]} azimuth={[-1, 0.75]} damping={0.1} snap>
         <Float rotationIntensity={0.4}>
-          <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
-          <Bottom computer={computer} />
+          <group scale={scale}>
+            <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
+            <Bottom computer={computer} />
+          </group>
         </Float>
       </PresentationControls>
 
