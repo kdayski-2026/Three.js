@@ -9,7 +9,7 @@ export default function Experience() {
     <>
       <OrbitControls makeDefault />
 
-      <Physics debug>
+      <Physics debug={false}>
         <Lights />
         <Level count={5} types={[BlockSpinner, BlockLimbo, BlockAxe]} />
         <Player />
