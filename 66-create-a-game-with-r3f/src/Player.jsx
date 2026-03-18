@@ -1,14 +1,25 @@
 import { useKeyboardControls } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { RigidBody, useRapier } from '@react-three/rapier';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import * as THREE from 'three';
+import useGame from './stores/useGame.js';
 
 export default function Player() {
+  const [smoothedCameraPosition] = useState(() => new THREE.Vector3(10, 10, 10));
+  const [smoothedTargetPosition] = useState(() => new THREE.Vector3());
   const body = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
+  const start = useGame((state) => state.start);
+  const end = useGame((state) => state.end);
+  const restart = useGame((state) => state.restart);
+  const blocksCount = useGame((state) => state.blocksCount);
 
   useFrame((state, delta) => {
+    /**
+     * Controls
+     */
     const { forward, backward, leftward, rightward } = getKeys();
 
     const impulse = { x: 0, y: 0, z: 0 };
@@ -36,6 +47,33 @@ export default function Player() {
 
     body.current.applyImpulse(impulse);
     body.current.applyTorqueImpulse(torque);
+
+    /**
+     * Camera
+     */
+    const bodyPosition = body.current.translation();
+
+    const cameraPosition = new THREE.Vector3();
+    cameraPosition.copy(bodyPosition);
+    cameraPosition.z += 2.25;
+    cameraPosition.y += 0.65;
+
+    const cameraTarget = new THREE.Vector3();
+    cameraTarget.copy(bodyPosition);
+    cameraTarget.y += 0.25;
+
+    smoothedCameraPosition.lerp(cameraPosition, 5 * delta);
+    smoothedTargetPosition.lerp(cameraTarget, 5 * delta);
+
+    state.camera.position.copy(smoothedCameraPosition);
+    state.camera.lookAt(smoothedTargetPosition);
+
+    /**
+     * Phases
+     */
+    if (bodyPosition.z < -(blocksCount * 4 + 2)) end();
+
+    if (bodyPosition.y < -4) restart();
   });
 
   const jump = () => {
@@ -48,16 +86,27 @@ export default function Player() {
     if (hit.timeOfImpact < 0.15) body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
   };
 
+  const reset = () => {
+    body.current.setTranslation({ x: 0, y: 1, z: 0 });
+    body.current.setLinvel({ x: 0, y: 0, z: 0 });
+    body.current.setAngvel({ x: 0, y: 0, z: 0 });
+  };
+
   useEffect(() => {
+    const unsubscribeReset = useGame.subscribe(
+      (state) => state.phase,
+      (value) => value === 'ready' && reset(),
+    );
     const unsubscribeJump = subscribeKeys(
       (state) => state.jump,
-      (value) => {
-        if (value) jump();
-      }
+      (value) => value && jump(),
     );
+    const unsubscribeAny = subscribeKeys(() => start());
 
     return () => {
+      unsubscribeReset();
       unsubscribeJump();
+      unsubscribeAny();
     };
   }, []);
 
