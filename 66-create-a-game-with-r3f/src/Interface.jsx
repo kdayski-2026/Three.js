@@ -1,6 +1,6 @@
 import { useKeyboardControls } from '@react-three/drei';
 import useGame from './stores/useGame.js';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { addEffect } from '@react-three/fiber';
 
 export default function Interface() {
@@ -12,6 +12,51 @@ export default function Interface() {
   const jump = useKeyboardControls((state) => state.jump);
   const restart = useGame((state) => state.restart);
   const phase = useGame((state) => state.phase);
+
+  const pressedRef = useRef(new Set());
+
+  const dispatchKey = (code, pressed) => {
+    const type = pressed ? 'keydown' : 'keyup';
+
+    const wasPressed = pressedRef.current.has(code);
+    if (pressed && wasPressed) return;
+    if (!pressed && !wasPressed) return;
+
+    if (pressed) pressedRef.current.add(code);
+    else pressedRef.current.delete(code);
+
+    window.dispatchEvent(
+      new KeyboardEvent(type, {
+        code,
+        bubbles: true,
+        cancelable: true,
+      }),
+    );
+  };
+
+  const bindVirtualKey = useMemo(() => {
+    return (code) => ({
+      role: 'button',
+      tabIndex: 0,
+      onPointerDown: (e) => {
+        e.preventDefault();
+        e.currentTarget.setPointerCapture?.(e.pointerId);
+        dispatchKey(code, true);
+      },
+      onPointerUp: (e) => {
+        e.preventDefault();
+        dispatchKey(code, false);
+      },
+      onPointerCancel: (e) => {
+        e.preventDefault();
+        dispatchKey(code, false);
+      },
+      onPointerLeave: (e) => {
+        e.preventDefault();
+        dispatchKey(code, false);
+      },
+    });
+  }, []);
 
   useEffect(() => {
     const unsubscribeEffect = addEffect(() => {
@@ -45,15 +90,15 @@ export default function Interface() {
 
       <div className="controls">
         <div className="raw">
-          <div className={`key ${forward ? 'active' : ''}`}></div>
+          <div className={`key ${forward ? 'active' : ''}`} {...bindVirtualKey('KeyW')}></div>
         </div>
         <div className="raw">
-          <div className={`key ${leftward ? 'active' : ''}`}></div>
-          <div className={`key ${backward ? 'active' : ''}`}></div>
-          <div className={`key ${rightward ? 'active' : ''}`}></div>
+          <div className={`key ${leftward ? 'active' : ''}`} {...bindVirtualKey('KeyA')}></div>
+          <div className={`key ${backward ? 'active' : ''}`} {...bindVirtualKey('KeyS')}></div>
+          <div className={`key ${rightward ? 'active' : ''}`} {...bindVirtualKey('KeyD')}></div>
         </div>
         <div className="raw">
-          <div className={`key large ${jump ? 'active' : ''}`}></div>
+          <div className={`key large ${jump ? 'active' : ''}`} {...bindVirtualKey('Space')}></div>
         </div>
       </div>
     </div>
