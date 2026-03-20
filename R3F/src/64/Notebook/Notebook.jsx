@@ -11,7 +11,7 @@ export default function Notebook() {
   const [isOpen, setIsOpen] = useState(false);
   const { camera } = useThree();
 
-  const { openEnable } = useControls('Notebook', { openEnable: false });
+  const { openEnable } = useControls('Notebook', { openEnable: true });
 
   const top = useMemo(() => {
     let top = null;

@@ -1,13 +1,10 @@
-import { useGLTF, useTexture } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
 import { useControls } from 'leva';
 import { useMemo, useRef } from 'react';
-import * as THREE from 'three';
+import Tea from './Tea';
 
 export default function Cup() {
-  const teaRef = useRef();
   const model = useGLTF('/portfolio/tea/tea_set_01_1k.gltf');
-  //   const texture = useTexture('/portfolio/tea/perlin.png');
 
   const { position, scale, rotation } = useControls('Cup', {
     position: {
@@ -29,24 +26,6 @@ export default function Cup() {
     },
   });
 
-  const { roughness, metalness, opacity } = useControls('Tea', {
-    roughness: {
-      value: 0,
-      min: 0,
-      max: 1,
-    },
-    metalness: {
-      value: 1,
-      min: 0,
-      max: 1,
-    },
-    opacity: {
-      value: 0.8,
-      min: 0,
-      max: 1,
-    },
-  });
-
   const cup = useMemo(() => {
     let found = null;
     model.scene.traverse((child) => {
@@ -61,19 +40,9 @@ export default function Cup() {
   if (!cup) return null;
 
   return (
-    <group position={[0, -0.45, 0]}>
+    <group position={[position.x, -0.45, position.z]}>
       <primitive object={cup} scale={scale} rotation-y={rotation} />
-      <mesh rotation-x={Math.PI * -0.5} position={[0.15, 0.17, 0.06]}>
-        <circleGeometry args={[0.14, 16]} />
-        <meshStandardMaterial
-          ref={teaRef}
-          color="#4C1208"
-          transparent={true}
-          roughness={roughness}
-          metalness={metalness}
-          opacity={opacity}
-        />
-      </mesh>
+      <Tea />
     </group>
   );
 }

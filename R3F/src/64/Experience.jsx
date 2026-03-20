@@ -1,4 +1,11 @@
-import { PresentationControls, useGLTF, Environment, Float, ContactShadows, OrbitControls } from '@react-three/drei';
+import {
+  PresentationControls,
+  useGLTF,
+  Environment,
+  Float,
+  ContactShadows,
+  OrbitControls,
+} from '@react-three/drei';
 import Notebook from './Notebook/Notebook';
 import Table from './Table/Table';
 import { useControls } from 'leva';
@@ -18,8 +25,15 @@ export default function Experience() {
 
       {orbit && <OrbitControls />}
 
-      <PresentationControls global polar={[-0.4, 0.2]} azimuth={[-1, 0.75]} damping={0.1} snap enabled={!orbit}>
-        {/* <Notebook /> */}
+      <PresentationControls
+        global
+        polar={[-0.4, 0.2]}
+        azimuth={[-1, 0.75]}
+        damping={0.1}
+        snap
+        enabled={!orbit}
+      >
+        <Notebook />
         <Table />
       </PresentationControls>
 
