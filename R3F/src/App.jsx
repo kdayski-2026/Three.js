@@ -30,7 +30,7 @@ export default function App() {
   ];
 
   const { name } = useControls('Project', {
-    name: { options: scenes.map((item) => item.name) },
+    name: { options: scenes.map((item) => item.name), value: '64-fun-and-simple-portfolio-with-r3f' },
   });
 
   useEffect(() => {

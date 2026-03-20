@@ -1,11 +1,10 @@
 import { Canvas } from '@react-three/fiber';
 import Experience from './Experience';
-import { StrictMode } from 'react';
 import { Leva } from 'leva';
 
 export default function Scene() {
   return (
-    <StrictMode>
+    <>
       <Leva collapsed />
       <Canvas
         camera={{
@@ -17,6 +16,6 @@ export default function Scene() {
       >
         <Experience />
       </Canvas>
-    </StrictMode>
+    </>
   );
 }

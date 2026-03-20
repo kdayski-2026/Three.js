@@ -1,6 +1,5 @@
 import { Html } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useState } from 'react';
 
 export default function Top({ top, toggleTop, isOpen }) {
   const [loaded, setLoaded] = useState(false);
@@ -13,7 +12,7 @@ export default function Top({ top, toggleTop, isOpen }) {
     <>
       {loaded && isOpen && (
         <rectAreaLight
-          width={2.5}
+          width={1.8}
           height={1.65}
           intensity={65}
           color={'#5900ff'}
