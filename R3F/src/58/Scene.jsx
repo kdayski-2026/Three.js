@@ -1,10 +1,15 @@
 import { Canvas } from '@react-three/fiber';
 import Experience from './Experience';
+import { useControls } from 'leva';
 
 export default function Scene() {
+  const { shadows } = useControls('Shadows', {
+    shadows: false,
+  });
+
   return (
     <Canvas
-      // shadows
+      shadows={shadows}
       camera={{
         fov: 45,
         near: 0.1,

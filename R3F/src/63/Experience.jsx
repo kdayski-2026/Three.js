@@ -21,7 +21,7 @@ export default function Experience() {
       noise: false,
       bloom: false,
       depthOfField: false,
-      drunk: true,
+      drunk: false,
       frequency: {
         value: 2,
         min: 1,
@@ -60,15 +60,17 @@ export default function Experience() {
         <meshStandardMaterial color="orange" />
       </mesh>
 
-      {/* <mesh castShadow position-x={2} scale={1.5}>
-        <boxGeometry />
-        <meshBasicMaterial color={[1.5 * 10, 1 * 10, 4 * 10]} toneMapped={false} />
-      </mesh> */}
-
-      <mesh castShadow position-x={2} scale={1.5}>
-        <boxGeometry />
-        <meshStandardMaterial color="mediumpurple" />
-      </mesh>
+      {bloom ? (
+        <mesh castShadow position-x={2} scale={1.5}>
+          <boxGeometry />
+          <meshBasicMaterial color={[1.5 * 10, 1 * 10, 4 * 10]} toneMapped={false} />
+        </mesh>
+      ) : (
+        <mesh castShadow position-x={2} scale={1.5}>
+          <boxGeometry />
+          <meshStandardMaterial color="mediumpurple" />
+        </mesh>
+      )}
 
       <mesh receiveShadow position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />

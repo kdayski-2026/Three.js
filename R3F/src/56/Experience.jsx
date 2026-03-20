@@ -7,11 +7,16 @@ import {
   Float,
   MeshReflectorMaterial,
 } from '@react-three/drei';
+import { useControls } from 'leva';
 import { useRef } from 'react';
 
 export default function Experience() {
   const cubeRef = useRef();
   const sphereRef = useRef();
+
+  const { floorReflection } = useControls({
+    floorReflection: true,
+  });
 
   return (
     <>
@@ -45,8 +50,11 @@ export default function Experience() {
 
       <mesh position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
         <planeGeometry />
-        {/* <meshStandardMaterial color="greenyellow" /> */}
-        <MeshReflectorMaterial resolution={512} blur={[1000, 1000]} mixBlur={1} mirror={0.75} color="greenyellow" />
+        {floorReflection ? (
+          <MeshReflectorMaterial resolution={512} blur={[1000, 1000]} mixBlur={1} mirror={0.75} color="greenyellow" />
+        ) : (
+          <meshStandardMaterial color="greenyellow" />
+        )}
       </mesh>
 
       <Float speed={5} floatIntensity={2}>

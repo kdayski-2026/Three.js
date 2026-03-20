@@ -1,4 +1,3 @@
-import './app.css';
 import { useEffect } from 'react';
 import { useControls } from 'leva';
 import Scene55 from './55/Scene';
@@ -19,7 +18,7 @@ export default function App() {
     { id: 55, name: '55-first-r3f-application', bg: 'lightskyblue', scene: <Scene55 /> },
     { id: 56, name: '56-r3f-drei', scene: <Scene56 /> },
     { id: 57, name: '57-debug-a-r3f-application', scene: <Scene57 /> },
-    { id: 58, name: '58-environment-and-staging-with-r3f', bg: 'unset', scene: <Scene58 /> },
+    { id: 58, name: '58-environment-and-staging-with-r3f', bg: 'none', scene: <Scene58 /> },
     { id: 59, name: '59-load-models-with-r3f', scene: <Scene59 /> },
     { id: 60, name: '60-3d-text-with-r3f', scene: <Scene60 /> },
     { id: 61, name: '61-portal-scene-with-r3f', scene: <Scene61 /> },
@@ -36,10 +35,7 @@ export default function App() {
 
   useEffect(() => {
     const id = name.split('-')[0];
-    document.documentElement.style.setProperty(
-      '--root-bg',
-      scenes.find((item) => item.id == id)['bg'] || 'ivory',
-    );
+    document.documentElement.style.setProperty('--root-bg', scenes.find((item) => item.id == id)['bg'] || 'ivory');
   }, [name]);
 
   return <>{scenes.find(({ id }) => id == name.split('-')[0]).scene}</>;

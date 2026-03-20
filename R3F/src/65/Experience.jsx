@@ -11,12 +11,15 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useControls } from 'leva';
 
 export default function Experience() {
   const [hitSound] = useState(() => new Audio('./hit.mp3'));
   const hamburger = useGLTF('./hamburger.glb');
   const cube = useRef();
   const twister = useRef();
+
+  const { audio } = useControls({ audio: false });
 
   const cubeJump = (e) => {
     e.stopPropagation();
@@ -26,9 +29,11 @@ export default function Experience() {
   };
 
   const collisionEnter = () => {
-    // hitSound.currentTime = 0;
-    // hitSound.volume = Math.random();
-    // hitSound.play();
+    if (audio) {
+      hitSound.currentTime = 0;
+      hitSound.volume = Math.random();
+      hitSound.play();
+    }
   };
 
   useFrame((state) => {
