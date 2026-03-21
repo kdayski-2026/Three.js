@@ -4,7 +4,7 @@ import { useMemo, useRef } from 'react';
 import Tea from './Tea';
 
 export default function Cup() {
-  const model = useGLTF('/portfolio/tea/tea_set_01_1k.gltf');
+  const model = useGLTF('/portfolio/tea/uploads_files_6535368_Seramik_ini_kupa.glb');
 
   const { position, scale, rotation } = useControls('Cup', {
     position: {
@@ -13,38 +13,30 @@ export default function Cup() {
       joystick: 'invertY',
     },
     scale: {
-      value: 3,
-      step: 0.01,
+      value: 0.15,
       min: 0,
-      max: 5,
+      max: 1,
     },
     rotation: {
-      value: 3.84,
-      step: 0.01,
+      value: 5.48,
       min: 0,
       max: Math.PI * 2,
     },
   });
 
-  const cup = useMemo(() => {
-    let found = null;
-    model.scene.traverse((child) => {
-      if (child.name === 'tea_set_01_cup_small_01') {
-        found = child;
-      }
-    });
-
-    return found ? found.clone(true) : null;
-  }, [model]);
-
-  if (!cup) return null;
+  model.scene.traverse((child) => {
+    if (child.isMesh) {
+      child.receiveShadow = true;
+      child.castShadow = true;
+    }
+  });
 
   return (
     <group position={[position.x, -0.45, position.z]}>
-      <primitive object={cup} scale={scale} rotation-y={rotation} />
+      <primitive object={model.scene} scale={scale} rotation-y={rotation} />
       <Tea />
     </group>
   );
 }
 
-useGLTF.preload('/portfolio/tea/tea_set_01_1k.gltf');
+useGLTF.preload('/portfolio/tea/uploads_files_6535368_Seramik_ini_kupa.gltf');

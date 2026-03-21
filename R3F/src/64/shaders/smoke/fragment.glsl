@@ -3,7 +3,6 @@ uniform float uTime;
 uniform vec3 uColor;
 uniform float uRemapFrom;
 uniform float uRemapTo;
-uniform vec2 uMouseUv;
 
 varying vec2 vUv;
 
@@ -27,7 +26,8 @@ void main () {
 	smoke *= smoothstep(1.0, 0.4, vUv.y);
 
 	// Final color
-	gl_FragColor = vec4(uColor, smoke);
+	gl_FragColor = vec4(uColor, smoke * 3.0);
+	// gl_FragColor = vec4(uColor, 1.0);
 
 	#include <tonemapping_fragment>
 	#include <colorspace_fragment>

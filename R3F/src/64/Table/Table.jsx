@@ -1,7 +1,8 @@
 import { useTexture } from '@react-three/drei';
 import { useControls } from 'leva';
 import { SRGBColorSpace } from 'three';
-import Cup from './Cup';
+import Cup from '../Cup/Cup';
+import Notebook from '../Notebook/Notebook';
 
 export default function Table() {
   const props = useTexture({
@@ -20,7 +21,7 @@ export default function Table() {
       step: 0.01,
     },
     metalness: {
-      value: 0.2,
+      value: 0.0,
       min: 0,
       max: 1,
       step: 0.01,
@@ -29,10 +30,11 @@ export default function Table() {
 
   return (
     <group>
-      <mesh position={[0, -0.5, 0]}>
+      <mesh position={[0, -0.5, 0]} receiveShadow>
         <boxGeometry args={[4, 0.1, 2.5]} />
         <meshStandardMaterial {...props} roughness={roughness} metalness={metalness} />
       </mesh>
+      <Notebook />
       <Cup />
     </group>
   );

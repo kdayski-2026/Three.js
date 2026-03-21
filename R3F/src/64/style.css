@@ -31,6 +31,10 @@
   animation: loader-spin 0.9s linear infinite;
 }
 
+#leva__root > div {
+  width: 320px;
+}
+
 @keyframes loader-spin {
   from {
     transform: rotate(0deg);

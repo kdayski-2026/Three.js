@@ -12,6 +12,13 @@ export default function Bottom({ computer }) {
       if (child.isMesh) result.push(child);
     });
     result[9].removeFromParent();
+    bottom.traverse((child) => {
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+
     return bottom;
   }, [computer]);
 

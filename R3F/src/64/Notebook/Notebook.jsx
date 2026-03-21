@@ -18,6 +18,12 @@ export default function Notebook() {
     computer.scene.traverse((child) => {
       if (child.name === 'Top') {
         top = child;
+        top.traverse((child) => {
+          if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
       }
     });
     if (top) {
@@ -55,9 +61,9 @@ export default function Notebook() {
         });
         gsap.to(camera.position, {
           duration: 2,
-          x: -2,
+          x: 0,
           y: 2,
-          z: 3,
+          z: 4,
           ease: 'power2.out',
         });
       }
