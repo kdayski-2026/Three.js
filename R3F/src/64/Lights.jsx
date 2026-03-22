@@ -110,6 +110,7 @@ export default function Lights() {
         shadow-normalBias={0.04}
         shadow-bias={-0.0004}
       />
+      <ambientLight intensity={1.5} />
     </>
   );
 }

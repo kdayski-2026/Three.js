@@ -7,7 +7,7 @@ export default function Cup() {
 
   const { position, scale, rotation } = useControls('Cup', {
     position: {
-      value: { x: 1.35, z: -0.55 },
+      value: { x: 3.38, z: -0.96 },
       step: 0.01,
       joystick: 'invertY',
     },
@@ -31,7 +31,7 @@ export default function Cup() {
   });
 
   return (
-    <group position={[position.x, -0.45, position.z]}>
+    <group scale={2.5} position={[position.x, 2.1, position.z]}>
       <primitive object={model.scene} scale={scale} rotation-y={rotation} />
       <Tea />
     </group>

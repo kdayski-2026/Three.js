@@ -1,8 +1,11 @@
 import './style.css';
 import { Canvas } from '@react-three/fiber';
 import Experience from './Experience';
+import useCamera from './stores/useCamera';
 
 export default function Scene() {
+  const position = useCamera((state) => state.position);
+
   return (
     <Canvas
       shadows
@@ -11,8 +14,7 @@ export default function Scene() {
         fov: 45,
         near: 0.1,
         far: 100,
-        position: [0, 8, 12],
-        // position: [-0.5, 0.5, 1.5],
+        position,
       }}
     >
       <Experience />

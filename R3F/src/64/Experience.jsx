@@ -23,6 +23,11 @@ export default function Experience() {
       <Controls>
         <Lights />
         <WorkSpace />
+
+        <mesh rotation-x={Math.PI * -0.5}>
+          <planeGeometry />
+          <meshBasicMaterial />
+        </mesh>
       </Controls>
 
       {/* <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} /> */}

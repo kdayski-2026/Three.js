@@ -5,10 +5,12 @@ import { useControls } from 'leva';
 import gsap from 'gsap';
 import useTable from '../stores/useTable.js';
 import useMesh from '../stores/useMesh.js';
+import useCamera from '../stores/useCamera.js';
 
 export default function Table() {
   const commodeRef = useRef();
   const { camera } = useThree();
+  const position = useCamera((state) => state.position);
   const geometry = useMesh((state) => state.geometry);
   const material = useTable((state) => state.material);
   const setTextures = useTable((state) => state.setTextures);
@@ -25,7 +27,8 @@ export default function Table() {
     }
   );
 
-  const { roughness, metalness } = useControls('Table', {
+  const { openEnable, roughness, metalness } = useControls('Table', {
+    openEnable: true,
     roughness: {
       value: 0.8,
       min: 0,
@@ -45,23 +48,35 @@ export default function Table() {
   }, [roughness, metalness]);
 
   const commodeToggle = (e) => {
-    e.stopPropagation();
-    if (commodeRef.current.position.z < 2.5) {
-      gsap.to(commodeRef.current.position, {
-        duration: 2,
-        z: 5,
-        onUpdate: () => {
-          camera.lookAt(commodeRef.current.position);
-        },
-      });
-    } else {
-      gsap.to(commodeRef.current.position, {
-        duration: 2,
-        z: 0,
-        onUpdate: () => {
-          camera.lookAt(commodeRef.current.position);
-        },
-      });
+    if (openEnable) {
+      e.stopPropagation();
+      if (commodeRef.current.position.z < 2.5) {
+        gsap.to(commodeRef.current.position, {
+          duration: 2,
+          z: 5,
+          onUpdate: () => {
+            camera.lookAt(commodeRef.current.position);
+          },
+        });
+        gsap.to(camera.position, {
+          duration: 2,
+          ...position,
+          y: position.y * 2.5,
+          z: position.z * 1.5,
+        });
+      } else {
+        gsap.to(commodeRef.current.position, {
+          duration: 2,
+          z: 0,
+          onUpdate: () => {
+            camera.lookAt(commodeRef.current.position);
+          },
+        });
+        gsap.to(camera.position, {
+          duration: 2,
+          ...position,
+        });
+      }
     }
   };
 
@@ -109,7 +124,7 @@ export default function Table() {
       </group>
 
       {/* Commode */}
-      <group ref={commodeRef} onClick={commodeToggle}>
+      <group ref={commodeRef}>
         {/* Right */}
         <mesh
           position={[5.725, -1.1, 0.1]}
@@ -147,9 +162,15 @@ export default function Table() {
           castShadow
           geometry={geometry}
           material={material}
+          onClick={commodeToggle}
         />
         {/* Handle */}
-        <mesh position={[0, -1.1, 4.3]} scale={[0.1, 0.1, 0.1]} rotation={[-Math.PI * 0.5, Math.PI * 0.25, 0]}>
+        <mesh
+          position={[0, -1.1, 4.3]}
+          scale={[0.1, 0.1, 0.1]}
+          rotation={[-Math.PI * 0.5, Math.PI * 0.25, 0]}
+          onClick={commodeToggle}
+        >
           <cylinderGeometry args={[Math.PI * 0.5, Math.PI * 0.8, 4, 4]} />
           <meshStandardMaterial color="#C0C0C0" roughness={0.2} metalness={0.8} />
         </mesh>

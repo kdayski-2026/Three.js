@@ -1,13 +1,15 @@
 import { useGLTF } from '@react-three/drei';
 import Top from './Top';
 import Bottom from './Bottom';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import gsap from 'gsap';
 import { useControls } from 'leva';
+import useCamera from '../stores/useCamera';
 
 export default function Notebook() {
   const computer = useGLTF('./portfolio/macbook_model.gltf');
+  const position = useCamera((state) => state.position);
   const [isOpen, setIsOpen] = useState(false);
   const { camera } = useThree();
 
@@ -44,9 +46,9 @@ export default function Notebook() {
         });
         gsap.to(camera.position, {
           duration: 2,
-          x: 0,
-          y: 1,
-          z: 3,
+          ...position,
+          y: position.y * 0.25,
+          z: position.z * 0.25,
           ease: 'power2.out',
           onComplete: () => {
             setIsOpen(true);
@@ -62,9 +64,7 @@ export default function Notebook() {
         });
         gsap.to(camera.position, {
           duration: 2,
-          x: 0,
-          y: 2,
-          z: 4,
+          ...position,
           ease: 'power2.out',
         });
       }
@@ -72,12 +72,10 @@ export default function Notebook() {
   };
 
   return (
-    <>
-      <group scale={1.5} position={[0, 3.2, 0]}>
-        <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
-        <Bottom bottom={bottom} />
-      </group>
-    </>
+    <group scale={1.5} position={[0, 3.2, 0]}>
+      <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
+      <Bottom bottom={bottom} />
+    </group>
   );
 }
 
