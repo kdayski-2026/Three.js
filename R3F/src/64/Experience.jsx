@@ -21,7 +21,7 @@ export default function Experience() {
         <Table />
       </Controls>
 
-      <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} />
+      {/* <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} /> */}
     </>
   );
 }
