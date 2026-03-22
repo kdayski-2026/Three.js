@@ -6,9 +6,13 @@ import Controls from './Controls';
 import { useControls } from 'leva';
 
 export default function Experience() {
-  const { backgroundColor } = useControls('Lights', {
-    backgroundColor: '#1d1a24',
-  });
+  const { backgroundColor } = useControls(
+    'Lights',
+    {
+      backgroundColor: '#1d1a24',
+    },
+    { collapsed: true }
+  );
 
   return (
     <>

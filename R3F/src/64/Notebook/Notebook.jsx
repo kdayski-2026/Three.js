@@ -73,9 +73,9 @@ export default function Notebook() {
 
   return (
     <>
-      <group scale={0.6}>
+      <group scale={1.5} position={[0, 3.2, 0]}>
         <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
-        <Bottom computer={computer} bottom={bottom} />
+        <Bottom bottom={bottom} />
       </group>
     </>
   );

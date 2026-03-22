@@ -1,10 +1,14 @@
+import { useEffect, useRef } from 'react';
+import { useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { useControls } from 'leva';
-import { useEffect } from 'react';
+import gsap from 'gsap';
 import useTable from '../stores/useTable.js';
 import useMesh from '../stores/useMesh.js';
 
 export default function Table() {
+  const commodeRef = useRef();
+  const { camera } = useThree();
   const geometry = useMesh((state) => state.geometry);
   const material = useTable((state) => state.material);
   const setTextures = useTable((state) => state.setTextures);
@@ -18,7 +22,7 @@ export default function Table() {
     },
     () => {
       setTextures(textures);
-    },
+    }
   );
 
   const { roughness, metalness } = useControls('Table', {
@@ -40,40 +44,116 @@ export default function Table() {
     if (roughness || metalness) setAttributes({ roughness, metalness });
   }, [roughness, metalness]);
 
+  const commodeToggle = (e) => {
+    e.stopPropagation();
+    if (commodeRef.current.position.z < 2.5) {
+      gsap.to(commodeRef.current.position, {
+        duration: 2,
+        z: 5,
+        onUpdate: () => {
+          camera.lookAt(commodeRef.current.position);
+        },
+      });
+    } else {
+      gsap.to(commodeRef.current.position, {
+        duration: 2,
+        z: 0,
+        onUpdate: () => {
+          camera.lookAt(commodeRef.current.position);
+        },
+      });
+    }
+  };
+
   return (
-    <group>
-      <mesh
-        position={[0, -0.5, 0]}
-        scale={[4, 0.1, 2.5]}
-        castShadow
-        receiveShadow
-        geometry={geometry}
-        material={material}
-      />
-      <mesh
-        position={[0, -1.55, -1.2]}
-        rotation-x={Math.PI * 0.5}
-        scale={[4, 0.1, 2]}
-        receiveShadow
-        geometry={geometry}
-        material={material}
-      />
-      <mesh
-        position={[-1.95, -1.55, 0]}
-        rotation-z={Math.PI * 0.5}
-        scale={[2, 0.1, 2.5]}
-        castShadow
-        geometry={geometry}
-        material={material}
-      />
-      <mesh
-        position={[1.95, -1.55, 0]}
-        rotation-z={Math.PI * 0.5}
-        scale={[2, 0.1, 2.5]}
-        receiveShadow
-        geometry={geometry}
-        material={material}
-      />
+    <group position-y={2}>
+      {/* Base */}
+      <group>
+        {/* Top */}
+        <mesh
+          position={[0, 0, 0.25]}
+          scale={[12.75, 0.2, 8.5]}
+          receiveShadow
+          castShadow
+          geometry={geometry}
+          material={material}
+        />
+        {/* Back */}
+        <mesh
+          position={[0, -3.85, -3.9]}
+          scale={[11.6, 0.2, 7.5]}
+          rotation-x={Math.PI * 0.5}
+          castShadow
+          geometry={geometry}
+          material={material}
+        />
+        {/* Left */}
+        <mesh
+          position={[-5.9, -3.85, 0]}
+          rotation-z={Math.PI * 0.5}
+          scale={[7.5, 0.2, 8]}
+          castShadow
+          geometry={geometry}
+          material={material}
+        />
+        {/* Right */}
+        <mesh
+          position={[5.9, -3.85, 0]}
+          rotation-z={Math.PI * 0.5}
+          scale={[7.5, 0.2, 8]}
+          castShadow
+          receiveShadow
+          geometry={geometry}
+          material={material}
+        />
+      </group>
+
+      {/* Commode */}
+      <group ref={commodeRef} onClick={commodeToggle}>
+        {/* Right */}
+        <mesh
+          position={[5.725, -1.1, 0.1]}
+          scale={[2, 0.15, 7.8]}
+          rotation-z={Math.PI * 0.5}
+          castShadow
+          receiveShadow
+          geometry={geometry}
+          material={material}
+        />
+        {/* Left */}
+        <mesh
+          position={[-5.725, -1.1, 0.1]}
+          scale={[2, 0.15, 7.8]}
+          rotation-z={Math.PI * 0.5}
+          castShadow
+          receiveShadow
+          geometry={geometry}
+          material={material}
+        />
+        {/* Bottom */}
+        <mesh
+          position={[0, -2.175, 0.1]}
+          scale={[11.6, 0.15, 7.8]}
+          receiveShadow
+          castShadow
+          geometry={geometry}
+          material={material}
+        />
+        {/* Front */}
+        <mesh
+          position={[0, -1.175, 4.075]}
+          scale={[12, 0.15, 2.15]}
+          rotation-x={Math.PI * 0.5}
+          castShadow
+          geometry={geometry}
+          material={material}
+        />
+        {/* Handle */}
+        <mesh position={[0, -1.1, 4.3]} scale={[0.1, 0.1, 0.1]} rotation={[-Math.PI * 0.5, Math.PI * 0.25, 0]}>
+          <cylinderGeometry args={[Math.PI * 0.5, Math.PI * 0.8, 4, 4]} />
+          <meshStandardMaterial color="#C0C0C0" roughness={0.2} metalness={0.8} />
+        </mesh>
+      </group>
     </group>
   );
 }

@@ -23,20 +23,14 @@ export default function Lights() {
   } = useControls('Lights', {
     background: false,
     environment: {
-      options: [
-        'wooden_studio_11_1k',
-        'theater_01_1k',
-        'golden_bay_1k',
-        'potsdamer_platz_1k',
-        'fireplace_1k',
-      ],
+      options: ['wooden_studio_11_1k', 'theater_01_1k', 'golden_bay_1k', 'potsdamer_platz_1k', 'fireplace_1k'],
     },
     lightColor: '#fce1be',
     lightPosition: {
-      value: { x: -2, y: 2, z: 1.5 },
+      value: { x: -10, y: 10, z: 5 },
     },
     lightScale: {
-      value: 1.5,
+      value: 2,
       min: 0,
       max: 10,
     },
@@ -108,13 +102,13 @@ export default function Lights() {
         scale={lightScale}
         shadow-mapSize={[1024, 1024]}
         shadow-camera-near={1}
-        shadow-camera-far={10}
-        shadow-camera-top={5}
-        shadow-camera-right={5}
-        shadow-camera-bottom={-5}
-        shadow-camera-left={-5}
-        shadow-normalBias={0.02}
-        shadow-bias={-0.0002}
+        shadow-camera-far={100}
+        shadow-camera-top={20}
+        shadow-camera-right={20}
+        shadow-camera-bottom={-20}
+        shadow-camera-left={-20}
+        shadow-normalBias={0.04}
+        shadow-bias={-0.0004}
       />
     </>
   );
