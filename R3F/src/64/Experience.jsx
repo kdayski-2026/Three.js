@@ -1,5 +1,5 @@
 import { ContactShadows } from '@react-three/drei';
-import Table from './Table/Table';
+import WorkSpace from './WorkSpace/WorkSpace';
 import { Perf } from 'r3f-perf';
 import Lights from './Lights';
 import Controls from './Controls';
@@ -18,7 +18,7 @@ export default function Experience() {
 
       <Controls>
         <Lights />
-        <Table />
+        <WorkSpace />
       </Controls>
 
       {/* <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} /> */}

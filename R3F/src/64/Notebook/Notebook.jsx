@@ -1,7 +1,7 @@
 import { useGLTF } from '@react-three/drei';
 import Top from './Top';
 import Bottom from './Bottom';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import gsap from 'gsap';
 import { useControls } from 'leva';
@@ -13,24 +13,25 @@ export default function Notebook() {
 
   const { openEnable } = useControls('Notebook', { openEnable: true });
 
-  const top = useMemo(() => {
-    let top = null;
+  const [top, bottom] = useMemo(() => {
     computer.scene.traverse((child) => {
-      if (child.name === 'Top') {
-        top = child;
-        top.traverse((child) => {
-          if (child.isMesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-          }
-        });
+      if (child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
       }
     });
-    if (top) {
-      top = top.clone();
-      top.rotation.x = Math.PI;
-      return top;
-    } else return null;
+
+    const top = computer.scene.getObjectByName('Top');
+    const bottom = computer.scene.clone(true);
+    let camera = null;
+    bottom.traverse((child) => {
+      if (child.name === 'FrontCameraRing001') camera = child;
+      if (child.name === 'Top') {
+        child.removeFromParent();
+      }
+    });
+    if (camera) camera.removeFromParent();
+    return [top, bottom];
   }, [computer]);
 
   const toggleTop = (e) => {
@@ -72,12 +73,10 @@ export default function Notebook() {
 
   return (
     <>
-      {/* <Float rotationIntensity={0.4}> */}
       <group scale={0.6}>
         <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
-        <Bottom computer={computer} />
+        <Bottom computer={computer} bottom={bottom} />
       </group>
-      {/* </Float> */}
     </>
   );
 }

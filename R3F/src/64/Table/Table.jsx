@@ -1,8 +1,5 @@
 import { useTexture } from '@react-three/drei';
 import { useControls } from 'leva';
-import { SRGBColorSpace } from 'three';
-import Cup from '../Cup/Cup';
-import Notebook from '../Notebook/Notebook';
 import { useEffect } from 'react';
 import useTable from '../stores/useTable.js';
 import useMesh from '../stores/useMesh.js';
@@ -12,13 +9,17 @@ export default function Table() {
   const material = useTable((state) => state.material);
   const setTextures = useTable((state) => state.setTextures);
   const setAttributes = useTable((state) => state.setAttributes);
-  const textures = useTexture({
-    map: '/portfolio/table/wood_table_001_diff_1k.jpg',
-    normalMap: '/portfolio/table/wood_table_001_nor_gl_1k.jpg',
-    aoMap: '/portfolio/table/wood_table_001_arm_1k.jpg',
-    roughnessMap: '/portfolio/table/wood_table_001_rough_1k.jpg',
-  });
-  textures.map.colorSpace = SRGBColorSpace;
+  const textures = useTexture(
+    {
+      map: '/portfolio/table/wood_table_001_diff_1k.jpg',
+      normalMap: '/portfolio/table/wood_table_001_nor_gl_1k.jpg',
+      aoMap: '/portfolio/table/wood_table_001_arm_1k.jpg',
+      roughnessMap: '/portfolio/table/wood_table_001_rough_1k.jpg',
+    },
+    () => {
+      setTextures(textures);
+    },
+  );
 
   const { roughness, metalness } = useControls('Table', {
     roughness: {
@@ -34,10 +35,6 @@ export default function Table() {
       step: 0.01,
     },
   });
-
-  useEffect(() => {
-    if (textures) setTextures(textures);
-  }, [textures]);
 
   useEffect(() => {
     if (roughness || metalness) setAttributes({ roughness, metalness });
@@ -77,8 +74,6 @@ export default function Table() {
         geometry={geometry}
         material={material}
       />
-      <Notebook />
-      <Cup />
     </group>
   );
 }

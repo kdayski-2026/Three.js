@@ -21,7 +21,13 @@ export default function Top({ top, toggleTop, isOpen }) {
         />
       )}
 
-      <primitive object={top} position={[0, -0.7, -1.09]} scale={0.6} onClick={toggleTop}>
+      <primitive
+        rotation-x={Math.PI}
+        object={top}
+        position={[0, -0.7, -1.105]}
+        scale={0.6}
+        onClick={toggleTop}
+      >
         <Html
           transform
           wrapperClass="htmlScreen"
@@ -35,7 +41,8 @@ export default function Top({ top, toggleTop, isOpen }) {
             </div>
           )}
           <iframe
-            src="https://tymio-landing.vercel.app/"
+            // src="https://tymio-landing.vercel.app/"
+            src="https://docs.tymio.com/en"
             onLoad={handleIframeLoaded}
             style={{ display: isOpen ? 'block' : 'none' }}
           />

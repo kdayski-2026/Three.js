@@ -1,6 +1,5 @@
 import { useGLTF } from '@react-three/drei';
 import { useControls } from 'leva';
-import { useMemo, useRef } from 'react';
 import Tea from './Tea';
 
 export default function Cup() {

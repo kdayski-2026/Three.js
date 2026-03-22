@@ -11,6 +11,7 @@ export default create(
           const material = state.material
           for (const [key, value] of Object.entries(textures)) {
             material[key] = value
+            if (key === 'map') material[key].colorSpace = THREE.SRGBColorSpace
           }
           return { material };
         }),
