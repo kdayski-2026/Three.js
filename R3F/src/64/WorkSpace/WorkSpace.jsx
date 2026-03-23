@@ -4,6 +4,7 @@ import Laptop from '../Laptop/Laptop';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import useScenePosition from '../stores/useScenePosition';
+import Environment from '../Environment/Environment';
 
 export default function WorkSpace() {
   const sceneRef = useRef();
@@ -28,6 +29,7 @@ export default function WorkSpace() {
 
   return (
     <group ref={sceneRef} scale={0.5}>
+      <Environment />
       <Table />
       <Laptop />
       <Cup />

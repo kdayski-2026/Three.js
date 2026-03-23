@@ -79,7 +79,7 @@ export default function Lights() {
 
   return (
     <>
-      <Environment
+      {/* <Environment
         files={`./portfolio/environment/${environment}.hdr`}
         background={background}
         // ground={{
@@ -92,7 +92,7 @@ export default function Lights() {
         backgroundRotation={[0, backgroundRotation, 0]}
         environmentIntensity={environmentIntensity}
         environmentRotation={[0, backgroundRotation, 0]}
-      />
+      /> */}
       <directionalLight
         ref={directionalLightRef}
         castShadow
@@ -108,7 +108,6 @@ export default function Lights() {
         shadow-camera-bottom={-10}
         shadow-camera-left={-10}
         shadow-normalBias={0.03}
-        shadow-bias={-0.0003}
       />
       <ambientLight intensity={1.5} />
     </>

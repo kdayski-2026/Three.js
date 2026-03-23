@@ -4,7 +4,7 @@ import { useTexture } from '@react-three/drei';
 import { useControls } from 'leva';
 import gsap from 'gsap';
 import useTable from '../stores/useTable.js';
-import useMesh from '../stores/useMesh.js';
+import useGeometry from '../stores/useGeometry.js';
 import useCamera from '../stores/useCamera.js';
 import useScenePosition from '../stores/useScenePosition.js';
 
@@ -12,7 +12,7 @@ export default function Table() {
   const commodeRef = useRef();
   const { camera } = useThree();
   const position = useCamera((state) => state.position);
-  const geometry = useMesh((state) => state.geometry);
+  const geometry = useGeometry((state) => state.box);
   const material = useTable((state) => state.material);
   const setTextures = useTable((state) => state.setTextures);
   const setAttributes = useTable((state) => state.setAttributes);
@@ -30,7 +30,7 @@ export default function Table() {
   );
 
   const { openEnable, roughness, metalness } = useControls('Table', {
-    openEnable: true,
+    openEnable: false,
     roughness: {
       value: 0.8,
       min: 0,
