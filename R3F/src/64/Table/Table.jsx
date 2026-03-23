@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import useTable from '../stores/useTable.js';
 import useMesh from '../stores/useMesh.js';
 import useCamera from '../stores/useCamera.js';
+import useScenePosition from '../stores/useScenePosition.js';
 
 export default function Table() {
   const commodeRef = useRef();
@@ -15,6 +16,7 @@ export default function Table() {
   const material = useTable((state) => state.material);
   const setTextures = useTable((state) => state.setTextures);
   const setAttributes = useTable((state) => state.setAttributes);
+  const setCenterPosition = useScenePosition((state) => state.setPosition);
   const textures = useTexture(
     {
       map: '/portfolio/table/wood_table_001_diff_1k.jpg',
@@ -51,6 +53,7 @@ export default function Table() {
     if (openEnable) {
       e.stopPropagation();
       if (commodeRef.current.position.z < 2.5) {
+        setCenterPosition(0, 0, -3);
         gsap.to(commodeRef.current.position, {
           duration: 2,
           z: 5,
@@ -61,10 +64,11 @@ export default function Table() {
         gsap.to(camera.position, {
           duration: 2,
           ...position,
-          y: position.y * 2.5,
-          z: position.z * 1.5,
+          y: position.y * 1,
+          z: position.z * 0.5,
         });
       } else {
+        setCenterPosition(0, 0, 0);
         gsap.to(commodeRef.current.position, {
           duration: 2,
           z: 0,

@@ -6,14 +6,16 @@ import { useThree } from '@react-three/fiber';
 import gsap from 'gsap';
 import { useControls } from 'leva';
 import useCamera from '../stores/useCamera';
+import useScenePosition from '../stores/useScenePosition';
 
-export default function Notebook() {
+export default function Laptop() {
   const computer = useGLTF('./portfolio/macbook_model.gltf');
   const position = useCamera((state) => state.position);
+  const setCenterPosition = useScenePosition((state) => state.setPosition);
   const [isOpen, setIsOpen] = useState(false);
   const { camera } = useThree();
 
-  const { openEnable } = useControls('Notebook', { openEnable: true });
+  const { openEnable } = useControls('Laptop', { openEnable: true });
 
   const [top, bottom] = useMemo(() => {
     computer.scene.traverse((child) => {
@@ -40,6 +42,7 @@ export default function Notebook() {
     if (openEnable) {
       e.stopPropagation();
       if (top.rotation.x >= Math.PI * 0.5) {
+        setCenterPosition(0, -2, 0);
         gsap.to(top.rotation, {
           duration: 2,
           x: Math.PI * 0.44,
@@ -48,7 +51,7 @@ export default function Notebook() {
           duration: 2,
           ...position,
           y: position.y * 0.25,
-          z: position.z * 0.25,
+          z: position.z * 0.5,
           ease: 'power2.out',
           onComplete: () => {
             setIsOpen(true);
@@ -58,6 +61,7 @@ export default function Notebook() {
         gsap.delayedCall(0.5, () => {
           setIsOpen(false);
         });
+        setCenterPosition(0, 0, 0);
         gsap.to(top.rotation, {
           duration: 2,
           x: Math.PI,

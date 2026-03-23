@@ -24,7 +24,7 @@ export default function Experience() {
         <Lights />
         <WorkSpace />
 
-        <mesh rotation-x={Math.PI * -0.5}>
+        <mesh rotation-x={Math.PI * -0.5} scale={0.1}>
           <planeGeometry />
           <meshBasicMaterial />
         </mesh>

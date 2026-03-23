@@ -27,7 +27,7 @@ export default function Lights() {
     },
     lightColor: '#fce1be',
     lightPosition: {
-      value: { x: -10, y: 10, z: 5 },
+      value: { x: -5, y: 5, z: 2.5 },
     },
     lightScale: {
       value: 2,
@@ -103,12 +103,12 @@ export default function Lights() {
         shadow-mapSize={[1024, 1024]}
         shadow-camera-near={1}
         shadow-camera-far={100}
-        shadow-camera-top={20}
-        shadow-camera-right={20}
-        shadow-camera-bottom={-20}
-        shadow-camera-left={-20}
-        shadow-normalBias={0.04}
-        shadow-bias={-0.0004}
+        shadow-camera-top={10}
+        shadow-camera-right={10}
+        shadow-camera-bottom={-10}
+        shadow-camera-left={-10}
+        shadow-normalBias={0.03}
+        shadow-bias={-0.0003}
       />
       <ambientLight intensity={1.5} />
     </>

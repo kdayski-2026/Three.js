@@ -5,7 +5,11 @@ import { subscribeWithSelector } from 'zustand/middleware';
 export default create(
 	subscribeWithSelector((set) => {
 		return {
-			position: new THREE.Vector3(0, 5, 6),
+			position: new THREE.Vector3(0, 0, 0),
+			setPosition: (...args) =>
+				set(() => {
+					return { position: new THREE.Vector3(...args) };
+				}),
 		};
 	}),
 );
