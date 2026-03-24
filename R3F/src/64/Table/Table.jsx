@@ -161,19 +161,12 @@ export default function Table() {
 
       {/* Commode */}
       <group ref={commodeRef}>
-        <instancedMesh
-          ref={commodeBodyRef}
-          args={[geometry, material, 3]}
-          castShadow
-          receiveShadow
-        />
+        <instancedMesh ref={commodeBodyRef} args={[geometry, material, 3]} receiveShadow />
         {/* Front */}
         <mesh
           position={[0, -1.175, 4.075]}
           scale={[12, 0.15, 2.15]}
           rotation-x={Math.PI * 0.5}
-          castShadow
-          receiveShadow
           geometry={geometry}
           material={material}
           onClick={commodeToggle}
@@ -183,7 +176,6 @@ export default function Table() {
           position={[0, -1.1, 4.3]}
           scale={[0.1, 0.1, 0.1]}
           rotation={[-Math.PI * 0.5, Math.PI * 0.25, 0]}
-          castShadow
           onClick={commodeToggle}
         >
           <cylinderGeometry args={[Math.PI * 0.5, Math.PI * 0.8, 4, 4]} />

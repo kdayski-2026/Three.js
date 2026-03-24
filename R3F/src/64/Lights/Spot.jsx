@@ -29,7 +29,7 @@ export default function Spot() {
           max: 2000,
         },
         distance: {
-          value: 10,
+          value: 12,
           min: 0,
           max: 100,
         },
@@ -75,12 +75,12 @@ export default function Spot() {
       angle={Math.PI * angle}
       penumbra={penumbra}
       decay={decay}
-      castShadow
-      shadow-mapSize={[1024, 1024]}
+      castShadow={true}
+      shadow-mapSize={[512, 512]}
       shadow-camera-near={1}
       shadow-camera-far={100}
-      shadow-bias={-0.0002}
-      shadow-normalBias={0.05}
+      shadow-bias={-0.0004}
+      shadow-normalBias={0.085}
     />
   );
 }

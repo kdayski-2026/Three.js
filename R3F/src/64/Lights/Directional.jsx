@@ -50,16 +50,16 @@ export default function Directional() {
       position={[position.x, position.y, position.z]}
       color={color}
       intensity={intensity}
-      castShadow
-      shadow-mapSize={[1024, 1024]}
-      shadow-camera-near={1}
-      shadow-camera-far={100}
-      shadow-camera-top={10}
-      shadow-camera-right={10}
-      shadow-camera-bottom={-10}
-      shadow-camera-left={-10}
-      shadow-bias={-0.0002}
-      shadow-normalBias={0.03}
+      castShadow={false}
+      // shadow-mapSize={[1024, 1024]}
+      // shadow-camera-near={1}
+      // shadow-camera-far={100}
+      // shadow-camera-top={10}
+      // shadow-camera-right={10}
+      // shadow-camera-bottom={-10}
+      // shadow-camera-left={-10}
+      // shadow-bias={-0.0002}
+      // shadow-normalBias={0.03}
     />
   );
 }

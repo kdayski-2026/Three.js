@@ -24,8 +24,6 @@ export default function Lamp() {
           roughness: 0,
           metalness: 0,
         });
-        child.receiveShadow = true;
-        child.castShadow = true;
       }
     });
   }, []);
