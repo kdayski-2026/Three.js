@@ -1,5 +1,6 @@
 import './style.css';
 import { Canvas } from '@react-three/fiber';
+import { PCFSoftShadowMap } from 'three';
 import Experience from './Experience';
 import useCamera from './stores/useCamera';
 
@@ -8,7 +9,7 @@ export default function Scene() {
 
   return (
     <Canvas
-      shadows
+      shadows={{ type: PCFSoftShadowMap }}
       className="r3f"
       camera={{
         fov: 45,

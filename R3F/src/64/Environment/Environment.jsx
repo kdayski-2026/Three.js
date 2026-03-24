@@ -15,14 +15,14 @@ export default function Environment() {
   const setFloorAttributes = useFloor((state) => state.setAttributes);
   const wallTextures = useTexture(
     {
-      map: '/portfolio/environment/plastered_wall_04_diff_1k.jpg',
-      normalMap: '/portfolio/environment/plastered_wall_04_nor_gl_1k.jpg',
-      aoMap: '/portfolio/environment/plastered_wall_04_arm_1k.jpg',
-      roughnessMap: '/portfolio/environment/plastered_wall_04_rough_1k.jpg',
+      map: '/portfolio/environment/beige_wall_001_diff_1k.jpg',
+      normalMap: '/portfolio/environment/beige_wall_001_nor_gl_1k.jpg',
+      aoMap: '/portfolio/environment/beige_wall_001_arm_1k.jpg',
+      roughnessMap: '/portfolio/environment/beige_wall_001_rough_1k.jpg',
     },
     () => {
       setWallTextures(wallTextures);
-    }
+    },
   );
   const floorTextures = useTexture(
     {
@@ -33,44 +33,55 @@ export default function Environment() {
     },
     () => {
       setFloorTextures(floorTextures);
-    }
+    },
   );
 
-  const { wallRoughness, wallMetalness, floorRoughness, floorMetalness } = useControls('Walls & Floor', {
-    wallRoughness: {
-      value: 1,
-      min: 0,
-      max: 1,
+  const { wallRoughness, wallMetalness, floorRoughness, floorMetalness } = useControls(
+    'Walls & Floor',
+    {
+      wallRoughness: {
+        value: 1,
+        min: 0,
+        max: 1,
+      },
+      wallMetalness: {
+        value: 0.0,
+        min: 0,
+        max: 1,
+      },
+      floorRoughness: {
+        value: 0.8,
+        min: 0,
+        max: 1,
+      },
+      floorMetalness: {
+        value: 0.0,
+        min: 0,
+        max: 1,
+      },
     },
-    wallMetalness: {
-      value: 0.0,
-      min: 0,
-      max: 1,
-    },
-    floorRoughness: {
-      value: 0.8,
-      min: 0,
-      max: 1,
-    },
-    floorMetalness: {
-      value: 0.0,
-      min: 0,
-      max: 1,
-    },
-  });
+  );
 
   useEffect(() => {
-    if (wallRoughness || wallMetalness) setWallAttributes({ roughness: wallRoughness, metalness: wallMetalness });
+    if (wallRoughness || wallMetalness)
+      setWallAttributes({ roughness: wallRoughness, metalness: wallMetalness });
   }, [wallRoughness, wallMetalness]);
 
   useEffect(() => {
-    if (floorRoughness || floorMetalness) setFloorAttributes({ roughness: floorRoughness, metalness: floorMetalness });
+    if (floorRoughness || floorMetalness)
+      setFloorAttributes({ roughness: floorRoughness, metalness: floorMetalness });
   }, [floorRoughness, floorMetalness]);
 
   return (
     <group>
       {/* Back */}
-      <mesh position={[0, 4.4, -5]} scale={[40, 20, 1]} material={wallMaterial} geometry={geometry} receiveShadow />
+      <mesh
+        position={[0, 4.4, -5]}
+        scale={[40, 20, 1]}
+        material={wallMaterial}
+        geometry={geometry}
+        receiveShadow
+      />
       {/* Left */}
       <mesh
         position={[-20, 4.4, 5]}

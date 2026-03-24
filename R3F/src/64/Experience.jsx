@@ -1,33 +1,21 @@
 import { ContactShadows } from '@react-three/drei';
 import WorkSpace from './WorkSpace/WorkSpace';
 import { Perf } from 'r3f-perf';
-import Lights from './Lights';
 import Controls from './Controls';
-import { useControls } from 'leva';
 
 export default function Experience() {
-  const { backgroundColor } = useControls(
-    'Lights',
-    {
-      backgroundColor: '#1d1a24',
-    },
-    { collapsed: true }
-  );
-
   return (
     <>
       <Perf position="top-left" />
 
-      <color args={[backgroundColor]} attach="background" />
-
       <Controls>
-        <Lights />
         <WorkSpace />
 
-        <mesh rotation-x={Math.PI * -0.5} scale={0.1}>
+        {/* lookAt */}
+        {/* <mesh rotation-x={Math.PI * -0.5} scale={0.1}>
           <planeGeometry />
           <meshBasicMaterial />
-        </mesh>
+        </mesh> */}
       </Controls>
 
       {/* <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} /> */}

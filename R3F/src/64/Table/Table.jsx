@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { useControls } from 'leva';
@@ -10,6 +11,8 @@ import useScenePosition from '../stores/useScenePosition.js';
 
 export default function Table() {
   const commodeRef = useRef();
+  const baseRef = useRef();
+  const commodeBodyRef = useRef();
   const { camera } = useThree();
   const position = useCamera((state) => state.position);
   const geometry = useGeometry((state) => state.box);
@@ -26,13 +29,13 @@ export default function Table() {
     },
     () => {
       setTextures(textures);
-    }
+    },
   );
 
   const { openEnable, roughness, metalness } = useControls('Table', {
-    openEnable: false,
+    openEnable: true,
     roughness: {
-      value: 0.8,
+      value: 0.5,
       min: 0,
       max: 1,
       step: 0.01,
@@ -48,6 +51,71 @@ export default function Table() {
   useEffect(() => {
     if (roughness || metalness) setAttributes({ roughness, metalness });
   }, [roughness, metalness]);
+
+  const tempObject = useMemo(() => new THREE.Object3D(), []);
+
+  useLayoutEffect(() => {
+    if (!baseRef.current || !commodeBodyRef.current) return;
+
+    const baseParts = [
+      {
+        position: [0, 0, 0.25],
+        rotation: [0, 0, 0],
+        scale: [12.75, 0.2, 8.5],
+      },
+      {
+        position: [0, -3.85, -3.9],
+        rotation: [Math.PI * 0.5, 0, 0],
+        scale: [11.6, 0.2, 7.5],
+      },
+      {
+        position: [-5.9, -3.85, 0],
+        rotation: [0, 0, Math.PI * 0.5],
+        scale: [7.5, 0.2, 8],
+      },
+      {
+        position: [5.9, -3.85, 0],
+        rotation: [0, 0, Math.PI * 0.5],
+        scale: [7.5, 0.2, 8],
+      },
+    ];
+
+    baseParts.forEach((part, i) => {
+      tempObject.position.set(...part.position);
+      tempObject.rotation.set(...part.rotation);
+      tempObject.scale.set(...part.scale);
+      tempObject.updateMatrix();
+      baseRef.current.setMatrixAt(i, tempObject.matrix);
+    });
+    baseRef.current.instanceMatrix.needsUpdate = true;
+
+    const commodeParts = [
+      {
+        position: [5.725, -1.1, 0.1],
+        rotation: [0, 0, Math.PI * 0.5],
+        scale: [2, 0.15, 7.8],
+      },
+      {
+        position: [-5.725, -1.1, 0.1],
+        rotation: [0, 0, Math.PI * 0.5],
+        scale: [2, 0.15, 7.8],
+      },
+      {
+        position: [0, -2.175, 0.1],
+        rotation: [0, 0, 0],
+        scale: [11.6, 0.15, 7.8],
+      },
+    ];
+
+    commodeParts.forEach((part, i) => {
+      tempObject.position.set(...part.position);
+      tempObject.rotation.set(...part.rotation);
+      tempObject.scale.set(...part.scale);
+      tempObject.updateMatrix();
+      commodeBodyRef.current.setMatrixAt(i, tempObject.matrix);
+    });
+    commodeBodyRef.current.instanceMatrix.needsUpdate = true;
+  }, [geometry, material, tempObject]);
 
   const commodeToggle = (e) => {
     if (openEnable) {
@@ -88,75 +156,16 @@ export default function Table() {
     <group position-y={2}>
       {/* Base */}
       <group>
-        {/* Top */}
-        <mesh
-          position={[0, 0, 0.25]}
-          scale={[12.75, 0.2, 8.5]}
-          receiveShadow
-          castShadow
-          geometry={geometry}
-          material={material}
-        />
-        {/* Back */}
-        <mesh
-          position={[0, -3.85, -3.9]}
-          scale={[11.6, 0.2, 7.5]}
-          rotation-x={Math.PI * 0.5}
-          castShadow
-          geometry={geometry}
-          material={material}
-        />
-        {/* Left */}
-        <mesh
-          position={[-5.9, -3.85, 0]}
-          rotation-z={Math.PI * 0.5}
-          scale={[7.5, 0.2, 8]}
-          castShadow
-          geometry={geometry}
-          material={material}
-        />
-        {/* Right */}
-        <mesh
-          position={[5.9, -3.85, 0]}
-          rotation-z={Math.PI * 0.5}
-          scale={[7.5, 0.2, 8]}
-          castShadow
-          receiveShadow
-          geometry={geometry}
-          material={material}
-        />
+        <instancedMesh ref={baseRef} args={[geometry, material, 4]} castShadow receiveShadow />
       </group>
 
       {/* Commode */}
       <group ref={commodeRef}>
-        {/* Right */}
-        <mesh
-          position={[5.725, -1.1, 0.1]}
-          scale={[2, 0.15, 7.8]}
-          rotation-z={Math.PI * 0.5}
+        <instancedMesh
+          ref={commodeBodyRef}
+          args={[geometry, material, 3]}
           castShadow
           receiveShadow
-          geometry={geometry}
-          material={material}
-        />
-        {/* Left */}
-        <mesh
-          position={[-5.725, -1.1, 0.1]}
-          scale={[2, 0.15, 7.8]}
-          rotation-z={Math.PI * 0.5}
-          castShadow
-          receiveShadow
-          geometry={geometry}
-          material={material}
-        />
-        {/* Bottom */}
-        <mesh
-          position={[0, -2.175, 0.1]}
-          scale={[11.6, 0.15, 7.8]}
-          receiveShadow
-          castShadow
-          geometry={geometry}
-          material={material}
         />
         {/* Front */}
         <mesh
@@ -164,6 +173,7 @@ export default function Table() {
           scale={[12, 0.15, 2.15]}
           rotation-x={Math.PI * 0.5}
           castShadow
+          receiveShadow
           geometry={geometry}
           material={material}
           onClick={commodeToggle}
@@ -173,6 +183,7 @@ export default function Table() {
           position={[0, -1.1, 4.3]}
           scale={[0.1, 0.1, 0.1]}
           rotation={[-Math.PI * 0.5, Math.PI * 0.25, 0]}
+          castShadow
           onClick={commodeToggle}
         >
           <cylinderGeometry args={[Math.PI * 0.5, Math.PI * 0.8, 4, 4]} />

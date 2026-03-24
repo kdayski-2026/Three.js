@@ -5,6 +5,8 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import useScenePosition from '../stores/useScenePosition';
 import Environment from '../Environment/Environment';
+import Lamp from '../Lamp/Lamp';
+import Lights from '../Lights/Lights';
 
 export default function WorkSpace() {
   const sceneRef = useRef();
@@ -19,7 +21,7 @@ export default function WorkSpace() {
   useEffect(() => {
     const unsubscribeMoveScene = useScenePosition.subscribe(
       (state) => state.position,
-      (value) => value && moveScene(value)
+      (value) => value && moveScene(value),
     );
 
     return () => {
@@ -29,10 +31,12 @@ export default function WorkSpace() {
 
   return (
     <group ref={sceneRef} scale={0.5}>
+      <Lights />
       <Environment />
       <Table />
       <Laptop />
       <Cup />
+      <Lamp />
     </group>
   );
 }

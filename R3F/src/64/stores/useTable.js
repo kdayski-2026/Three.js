@@ -10,8 +10,11 @@ export default create(
         set((state) => {
           const material = state.material
           for (const [key, value] of Object.entries(textures)) {
+            value.wrapS = value.wrapT = THREE.RepeatWrapping;
+            value.repeat.set(1, 2);
+            value.rotation = Math.PI / 2;
             material[key] = value
-            if (key === 'map') material[key].colorSpace = THREE.SRGBColorSpace
+            if (key === 'map') material[key].colorSpace = THREE.LinearSRGBColorSpace
           }
           return { material };
         }),

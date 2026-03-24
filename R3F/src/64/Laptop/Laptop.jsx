@@ -15,7 +15,7 @@ export default function Laptop() {
   const [isOpen, setIsOpen] = useState(false);
   const { camera } = useThree();
 
-  const { openEnable } = useControls('Laptop', { openEnable: false });
+  const { openEnable } = useControls('Laptop', { openEnable: true });
 
   const [top, bottom] = useMemo(() => {
     computer.scene.traverse((child) => {
