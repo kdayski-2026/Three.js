@@ -15,10 +15,10 @@ export default function Environment() {
   const setFloorAttributes = useFloor((state) => state.setAttributes);
   const wallTextures = useTexture(
     {
-      map: '/portfolio/environment/beige_wall_001_diff_1k.jpg',
-      normalMap: '/portfolio/environment/beige_wall_001_nor_gl_1k.jpg',
-      aoMap: '/portfolio/environment/beige_wall_001_arm_1k.jpg',
-      roughnessMap: '/portfolio/environment/beige_wall_001_rough_1k.jpg',
+      map: '/portfolio/environment/min/beige_wall_001_diff_1k.jpg',
+      normalMap: '/portfolio/environment/min/beige_wall_001_nor_gl_1k.jpg',
+      aoMap: '/portfolio/environment/min/beige_wall_001_arm_1k.jpg',
+      roughnessMap: '/portfolio/environment/min/beige_wall_001_rough_1k.jpg',
     },
     () => {
       setWallTextures(wallTextures);
@@ -26,10 +26,10 @@ export default function Environment() {
   );
   const floorTextures = useTexture(
     {
-      map: '/portfolio/environment/laminate_floor_02_diff_1k.jpg',
-      normalMap: '/portfolio/environment/laminate_floor_02_nor_gl_1k.jpg',
-      aoMap: '/portfolio/environment/laminate_floor_02_arm_1k.jpg',
-      roughnessMap: '/portfolio/environment/laminate_floor_02_rough_1k.jpg',
+      map: '/portfolio/environment/min/laminate_floor_02_diff_1k.jpg',
+      normalMap: '/portfolio/environment/min/laminate_floor_02_nor_gl_1k.jpg',
+      aoMap: '/portfolio/environment/min/laminate_floor_02_arm_1k.jpg',
+      roughnessMap: '/portfolio/environment/min/laminate_floor_02_rough_1k.jpg',
     },
     () => {
       setFloorTextures(floorTextures);

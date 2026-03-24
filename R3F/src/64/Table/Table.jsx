@@ -22,10 +22,10 @@ export default function Table() {
   const setCenterPosition = useScenePosition((state) => state.setPosition);
   const textures = useTexture(
     {
-      map: '/portfolio/table/wood_table_001_diff_1k.jpg',
-      normalMap: '/portfolio/table/wood_table_001_nor_gl_1k.jpg',
-      aoMap: '/portfolio/table/wood_table_001_arm_1k.jpg',
-      roughnessMap: '/portfolio/table/wood_table_001_rough_1k.jpg',
+      map: '/portfolio/table/min/wood_table_001_diff_1k.jpg',
+      normalMap: '/portfolio/table/min/wood_table_001_nor_gl_1k.jpg',
+      aoMap: '/portfolio/table/min/wood_table_001_arm_1k.jpg',
+      roughnessMap: '/portfolio/table/min/wood_table_001_rough_1k.jpg',
     },
     () => {
       setTextures(textures);

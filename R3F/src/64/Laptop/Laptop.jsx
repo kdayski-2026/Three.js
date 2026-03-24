@@ -9,7 +9,10 @@ import useCamera from '../stores/useCamera';
 import useScenePosition from '../stores/useScenePosition';
 
 export default function Laptop() {
-  const computer = useGLTF('./portfolio/macbook_model.gltf');
+  // const computer = useGLTF('./portfolio/laptop/macbook_model.gltf');
+  const computer1 = useGLTF('./portfolio/laptop/uploads_files_6876554_MacBookAir_2K.glb');
+  const computer2 = useGLTF('./portfolio/laptop/Low_Poly_Laptop.gltf');
+
   const position = useCamera((state) => state.position);
   const setCenterPosition = useScenePosition((state) => state.setPosition);
   const [isOpen, setIsOpen] = useState(false);
@@ -17,26 +20,26 @@ export default function Laptop() {
 
   const { openEnable } = useControls('Laptop', { openEnable: true });
 
-  const [top, bottom] = useMemo(() => {
-    computer.scene.traverse((child) => {
-      if (child.isMesh) {
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
+  // const [top, bottom] = useMemo(() => {
+  //   computer.scene.traverse((child) => {
+  //     if (child.isMesh) {
+  //       child.castShadow = true;
+  //       child.receiveShadow = true;
+  //     }
+  //   });
 
-    const top = computer.scene.getObjectByName('Top');
-    const bottom = computer.scene.clone(true);
-    let camera = null;
-    bottom.traverse((child) => {
-      if (child.name === 'FrontCameraRing001') camera = child;
-      if (child.name === 'Top') {
-        child.removeFromParent();
-      }
-    });
-    if (camera) camera.removeFromParent();
-    return [top, bottom];
-  }, [computer]);
+  //   const top = computer.scene.getObjectByName('Top');
+  //   const bottom = computer.scene.clone(true);
+  //   let camera = null;
+  //   bottom.traverse((child) => {
+  //     if (child.name === 'FrontCameraRing001') camera = child;
+  //     if (child.name === 'Top') {
+  //       child.removeFromParent();
+  //     }
+  //   });
+  //   if (camera) camera.removeFromParent();
+  //   return [top, bottom];
+  // }, [computer]);
 
   const toggleTop = (e) => {
     if (openEnable) {
@@ -77,10 +80,14 @@ export default function Laptop() {
 
   return (
     <group scale={1.5} position={[0, 3.2, 0]}>
-      <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
-      <Bottom bottom={bottom} />
+      <primitive object={computer2.scene} scale={10} position-x={2} position-z={1} />
+      <primitive object={computer1.scene} position-x={-2} position-z={2} />
+      {/* <Top toggleTop={toggleTop} top={top} isOpen={isOpen} />
+      <Bottom bottom={bottom} /> */}
     </group>
   );
 }
 
-useGLTF.preload('./macbook_model.gltf');
+// useGLTF.preload('./portfolio/laptop/macbook_model.gltf');
+// useGLTF.preload('./portfolio/laptop/uploads_files_6876554_MacBookAir_2K.glb');
+// useGLTF.preload('./portfolio/laptop/Low_Poly_Laptop.gltf');

@@ -41,4 +41,4 @@ export default function Cup() {
   );
 }
 
-useGLTF.preload('/portfolio/tea/uploads_files_6535368_Seramik_ini_kupa.gltf');
+useGLTF.preload('/portfolio/tea/uploads_files_6535368_Seramik_ini_kupa.glb');
