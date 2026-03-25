@@ -1,4 +1,4 @@
-import { useGLTF } from '@react-three/drei';
+import { ContactShadows, useGLTF } from '@react-three/drei';
 import { useControls } from 'leva';
 import Tea from './Tea';
 import { useEffect } from 'react';
@@ -25,13 +25,15 @@ export default function Cup() {
   });
 
   useEffect(() => {
-    model.scene.traverse((child) => {
-      if (child.isMesh) {
-        child.receiveShadow = true;
-        child.castShadow = true;
-      }
-    });
-  }, []);
+    if (model) {
+      model.scene.traverse((child) => {
+        if (child.isMesh) {
+          child.receiveShadow = true;
+          child.castShadow = true;
+        }
+      });
+    }
+  }, [model]);
 
   return (
     <group scale={2.5} position={[position.x, 2.1, position.z]}>

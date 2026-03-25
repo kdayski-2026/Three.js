@@ -14,7 +14,7 @@ export default function Scene() {
       camera={{
         fov: 45,
         near: 0.1,
-        far: 100,
+        far: 50,
         position,
       }}
     >

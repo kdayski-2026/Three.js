@@ -3,15 +3,13 @@ import Ambient from './Ambient';
 import Directional from './Directional';
 import Spot from './Spot';
 import RectArea from './RectArea';
-import Point from './Point';
 
 export default function Lights() {
-  const { ambient, spot, directional, rectArea, point } = useControls('Lights', {
+  const { ambient, spot, directional, rectArea } = useControls('Lights', {
     ambient: true,
     spot: true,
     directional: true,
     rectArea: true,
-    point: false,
   });
 
   return (
@@ -20,7 +18,6 @@ export default function Lights() {
       {ambient && <Ambient />}
       {spot && <Spot />}
       {rectArea && <RectArea />}
-      {point && <Point />}
     </>
   );
 }

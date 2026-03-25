@@ -78,7 +78,7 @@ export default function Spot() {
       castShadow={true}
       shadow-mapSize={[512, 512]}
       shadow-camera-near={1}
-      shadow-camera-far={100}
+      shadow-camera-far={10}
       shadow-bias={-0.0004}
       shadow-normalBias={0.085}
     />

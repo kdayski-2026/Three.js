@@ -11,8 +11,8 @@ export default function Controls({ children }) {
   const { orbit, movePower, smoothPower, mouseTrack } = useControls(
     'Controls',
     {
-      orbit: false,
-      mouseTrack: true,
+      orbit: true,
+      mouseTrack: false,
       movePower: {
         value: 1.1,
         min: 0,

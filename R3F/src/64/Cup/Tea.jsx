@@ -10,7 +10,7 @@ import Smoke from './Smoke';
 
 export default function Tea() {
   const teaRef = useRef();
-  const { position, roughness, metalness, opacity, uPointsMod, uWavesMod, uColorStart, uColorEnd } =
+  const { position, roughness, metalness, uPointsMod, uWavesMod, uColorStart, uColorEnd } =
     useControls('Tea', {
       position: {
         value: {
@@ -28,11 +28,6 @@ export default function Tea() {
       },
       metalness: {
         value: 0.6,
-        min: 0,
-        max: 1,
-      },
-      opacity: {
-        value: 0.8,
         min: 0,
         max: 1,
       },
@@ -63,10 +58,8 @@ export default function Tea() {
         <meshStandardMaterial
           ref={teaRef}
           color="#4C1208"
-          transparent={true}
           roughness={roughness}
           metalness={metalness}
-          opacity={opacity}
           onBeforeCompile={(shader) => {
             shader.uniforms.uTime = { value: 0 };
             shader.uniforms.uColorStart = { value: new Color(uColorStart) };
