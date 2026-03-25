@@ -1,16 +1,29 @@
-import { Color, MeshStandardMaterial } from 'three';
+import { Color, MeshBasicMaterial, MeshStandardMaterial } from 'three';
 import { useGLTF } from '@react-three/drei';
 import { useControls } from 'leva';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
+import gsap from 'gsap';
+import useGeometry from '../stores/useGeometry';
+import useMaterial from '../stores/useMaterial';
+import useLights from '../stores/useLights';
 
 export default function Lamp() {
-  const lamp = useGLTF('./portfolio/lights/uploads_files_5932906_retro_desk_lamp.glb');
+  const lamp = useGLTF('./portfolio/lights/desk_lamp_arm_01_1k.gltf');
+  const box = useGeometry((state) => state.box);
+  const basic = useMaterial((state) => state.basic);
+  const toggle = useLights((state) => state.toggle);
+  const spot = useLights((state) => state.spot);
+
+  const lampMaterial = useMemo(() => new MeshBasicMaterial({ color: new Color('#ffffff') }), []);
+  const onColor = useMemo(() => new Color('#ffffff'), []);
+  const offColor = useMemo(() => new Color('#1b1b1b'), []);
+
   const { position, rotation } = useControls('Lamp', {
     position: {
-      value: { x: -4.8, y: 2.1, z: -2.0 },
+      value: { x: -7.5, y: 2.1, z: -2.0 },
     },
     rotation: {
-      value: Math.PI * 1.25,
+      value: 4.17,
       min: 0,
       max: Math.PI * 2,
     },
@@ -24,18 +37,57 @@ export default function Lamp() {
           roughness: 0,
           metalness: 0,
         });
+        if (child.name === 'Box001_1') child.material = lampMaterial;
       }
     });
   }, []);
 
+  useEffect(() => {
+    if (lampMaterial) {
+      const target = spot ? onColor : offColor;
+      gsap.to(lampMaterial.color, {
+        r: target.r,
+        g: target.g,
+        b: target.b,
+        duration: 0.35,
+        ease: 'power2.out',
+        overwrite: true,
+      });
+    }
+  }, [spot]);
+
+  const spotLightToggle = (e) => {
+    e.stopPropagation();
+    toggle('spot');
+  };
+
   return (
-    <primitive
-      scale={0.12}
-      rotation-y={rotation}
-      object={lamp.scene}
-      position={[position.x, position.y, position.z]}
-    />
+    <group>
+      <primitive
+        scale={10}
+        rotation-y={rotation}
+        object={lamp.scene}
+        position={[position.x, position.y, position.z]}
+      />
+      <mesh
+        geometry={box}
+        material={basic}
+        visible={false}
+        scale={[2.1, 2.25, 2]}
+        position={[position.x + 1.7, position.y + 6.95, position.z + 1]}
+        onClick={spotLightToggle}
+      />
+      <mesh
+        geometry={box}
+        material={basic}
+        visible={false}
+        scale={[0.75, 6, 0.75]}
+        position={[position.x - 1.2, position.y + 2, position.z - 0.5]}
+        rotation={[Math.PI * -0.1, 0, Math.PI * -0.8]}
+        onClick={spotLightToggle}
+      />
+    </group>
   );
 }
 
-useGLTF.preload('./portfolio/lights/uploads_files_5932906_retro_desk_lamp.glb');
+useGLTF.preload('./portfolio/lights/desk_lamp_arm_01_1k.gltf');

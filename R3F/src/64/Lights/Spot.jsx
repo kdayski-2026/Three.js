@@ -9,14 +9,14 @@ export default function Spot() {
   const worldPosition = useMemo(() => new Vector3(), []);
   const worldQuaternion = useMemo(() => new Quaternion(), []);
   const rotatedOffset = useMemo(() => new Vector3(), []);
-  const targetOffset = useMemo(() => new Vector3(1, -2.2, 1), []);
+  const targetOffset = useMemo(() => new Vector3(1, -3, 0), []);
   const { position, color, intensity, power, distance, angle, penumbra, decay } = useControls(
     'Lights',
     {
       Spot: folder({
         color: '#FFD59E',
         position: {
-          value: { x: -2.4, y: 1.05, z: -1 },
+          value: { x: -4.4, y: 4.75, z: -1 },
         },
         intensity: {
           value: 16,
@@ -80,7 +80,7 @@ export default function Spot() {
       shadow-camera-near={1}
       shadow-camera-far={10}
       shadow-bias={-0.0004}
-      shadow-normalBias={0.085}
+      shadow-normalBias={0.075}
     />
   );
 }

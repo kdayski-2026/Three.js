@@ -5,8 +5,9 @@ import { subscribeWithSelector } from 'zustand/middleware';
 export default create(
   subscribeWithSelector((set) => {
     return {
-      box: new THREE.BoxGeometry(1, 1, 1),
-      plane: new THREE.PlaneGeometry(1, 1)
+      box: new THREE.BoxGeometry(),
+      plane: new THREE.PlaneGeometry(),
+      circle: new THREE.CircleGeometry()
     };
   }),
 );

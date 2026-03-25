@@ -8,9 +8,10 @@ import { useTexture } from '@react-three/drei';
 
 export default function Smoke() {
   const smokeRef = useRef();
-  const texture = useTexture('./portfolio/tea/perlin.png');
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
+  const texture = useTexture('./portfolio/tea/perlin.png', (texture) => {
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+  });
 
   const { rotation, position, scale, uColor, uRemapFrom, uRemapTo, uRotateYSpeed, uTwistPower } =
     useControls('Smoke', {

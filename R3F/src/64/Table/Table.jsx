@@ -153,7 +153,7 @@ export default function Table() {
   };
 
   return (
-    <group position-y={2}>
+    <group position-y={2} scale={[1.2, 1, 1]}>
       {/* Base */}
       <group>
         <instancedMesh ref={baseRef} args={[geometry, material, 4]} castShadow receiveShadow />

@@ -5,7 +5,9 @@ import { subscribeWithSelector } from 'zustand/middleware';
 export default create(
 	subscribeWithSelector((set) => {
 		return {
-			position: new THREE.Vector3(0, 6, 8),
+			basic: new THREE.MeshBasicMaterial(),
+			standard: new THREE.MeshStandardMaterial(),
+			shader: new THREE.ShaderMaterial()
 		};
 	}),
 );

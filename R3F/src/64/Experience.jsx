@@ -1,4 +1,3 @@
-import { ContactShadows } from '@react-three/drei';
 import WorkSpace from './WorkSpace/WorkSpace';
 import { Perf } from 'r3f-perf';
 import Controls from './Controls';
@@ -6,7 +5,7 @@ import Controls from './Controls';
 export default function Experience() {
   return (
     <>
-      <Perf position="top-left" />
+      {/* <Perf position="top-left" /> */}
 
       <Controls>
         <WorkSpace />
@@ -17,8 +16,6 @@ export default function Experience() {
           <meshBasicMaterial />
         </mesh> */}
       </Controls>
-
-      {/* <ContactShadows position-y={-1.4} opacity={0.4} scale={5} blur={2.4} /> */}
     </>
   );
 }

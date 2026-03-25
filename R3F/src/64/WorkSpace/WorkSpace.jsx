@@ -7,6 +7,7 @@ import useScenePosition from '../stores/useScenePosition';
 import Environment from '../Environment/Environment';
 import Lamp from '../Lamp/Lamp';
 import Lights from '../Lights/Lights';
+import Board from '../Board/Board';
 
 export default function WorkSpace() {
   const sceneRef = useRef();
@@ -18,14 +19,26 @@ export default function WorkSpace() {
     });
   };
 
+  const rotateScene = (position) => {
+    gsap.to(sceneRef.current.rotation, {
+      duration: 2,
+      ...position,
+    });
+  };
+
   useEffect(() => {
     const unsubscribeMoveScene = useScenePosition.subscribe(
       (state) => state.position,
       (value) => value && moveScene(value),
     );
+    const unsubscribeRotateScene = useScenePosition.subscribe(
+      (state) => state.rotation,
+      (value) => value && rotateScene(value),
+    );
 
     return () => {
       unsubscribeMoveScene();
+      unsubscribeRotateScene();
     };
   }, []);
 
@@ -37,6 +50,7 @@ export default function WorkSpace() {
       <Laptop />
       <Cup />
       <Lamp />
+      <Board />
     </group>
   );
 }
