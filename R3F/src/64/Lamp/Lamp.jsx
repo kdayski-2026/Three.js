@@ -45,6 +45,7 @@ export default function Lamp() {
   useEffect(() => {
     if (lampMaterial) {
       const target = spot ? onColor : offColor;
+      // gsap.killTweensOf(lampMaterial.color);
       gsap.to(lampMaterial.color, {
         r: target.r,
         g: target.g,
@@ -63,12 +64,7 @@ export default function Lamp() {
 
   return (
     <group>
-      <primitive
-        scale={10}
-        rotation-y={rotation}
-        object={lamp.scene}
-        position={[position.x, position.y, position.z]}
-      />
+      <primitive scale={10} rotation-y={rotation} object={lamp.scene} position={[position.x, position.y, position.z]} />
       <mesh
         geometry={box}
         material={basic}

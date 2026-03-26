@@ -61,6 +61,21 @@ export default function Spot() {
     }
   });
 
+  const { bias, normal } = useControls({
+    bias: {
+      value: -0.0001,
+      min: -0.003,
+      max: -0.0001,
+      step: 0.00001,
+    },
+    normal: {
+      value: 0.13,
+      min: 0.02,
+      max: 0.3,
+      step: 0.001,
+    },
+  });
+
   return (
     <spotLight
       ref={spotLightRef}
@@ -73,11 +88,11 @@ export default function Spot() {
       penumbra={penumbra}
       decay={decay}
       castShadow={true}
-      shadow-mapSize={[512, 512]}
+      shadow-mapSize={[1024, 1024]}
       shadow-camera-near={1}
       shadow-camera-far={10}
-      shadow-bias={-0.0004}
-      shadow-normalBias={0.075}
+      shadow-bias={bias}
+      shadow-normalBias={normal}
     />
   );
 }

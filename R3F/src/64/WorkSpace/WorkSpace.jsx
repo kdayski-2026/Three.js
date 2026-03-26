@@ -13,6 +13,7 @@ export default function WorkSpace() {
   const sceneRef = useRef();
 
   const moveScene = (position) => {
+    // gsap.killTweensOf(sceneRef.current.position);
     gsap.to(sceneRef.current.position, {
       duration: 2,
       ...position,
@@ -20,6 +21,7 @@ export default function WorkSpace() {
   };
 
   const rotateScene = (position) => {
+    // gsap.killTweensOf(sceneRef.current.position);
     gsap.to(sceneRef.current.rotation, {
       duration: 2,
       ...position,
@@ -29,11 +31,11 @@ export default function WorkSpace() {
   useEffect(() => {
     const unsubscribeMoveScene = useScenePosition.subscribe(
       (state) => state.position,
-      (value) => value && moveScene(value),
+      (value) => value && moveScene(value)
     );
     const unsubscribeRotateScene = useScenePosition.subscribe(
       (state) => state.rotation,
-      (value) => value && rotateScene(value),
+      (value) => value && rotateScene(value)
     );
 
     return () => {

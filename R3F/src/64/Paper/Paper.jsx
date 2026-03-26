@@ -18,6 +18,8 @@ export default function Paper() {
   const movePaper = (e) => {
     e.stopPropagation();
     const mesh = e.eventObject;
+    gsap.killTweensOf(mesh.position);
+    gsap.killTweensOf(mesh.rotation);
     if (mesh.position.x === -3) {
       gsap.to(mesh.position, {
         duration: 1,

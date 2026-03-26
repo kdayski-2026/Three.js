@@ -8,6 +8,7 @@ import useTable from '../stores/useTable.js';
 import useGeometry from '../stores/useGeometry.js';
 import useCamera from '../stores/useCamera.js';
 import useScenePosition from '../stores/useScenePosition.js';
+import useMaterial from '../stores/useMaterial.js';
 import Paper from '../Paper/Paper.jsx';
 
 export default function Table() {
@@ -17,6 +18,7 @@ export default function Table() {
   const { camera } = useThree();
   const position = useCamera((state) => state.position);
   const geometry = useGeometry((state) => state.box);
+  const basic = useMaterial((state) => state.basic);
   const material = useTable((state) => state.material);
   const setTextures = useTable((state) => state.setTextures);
   const setAttributes = useTable((state) => state.setAttributes);
@@ -121,6 +123,8 @@ export default function Table() {
   const commodeToggle = (e) => {
     if (openEnable) {
       e.stopPropagation();
+      // gsap.killTweensOf(commodeRef.current.position);
+      // gsap.killTweensOf(camera.position);
       if (commodeRef.current.position.z < 2.5) {
         setCenterPosition(1, 1, -3);
         gsap.to(commodeRef.current.position, {
@@ -157,7 +161,13 @@ export default function Table() {
     <group position-y={2} scale={[1.2, 1, 1]}>
       {/* Base */}
       <group>
-        <instancedMesh ref={baseRef} args={[geometry, material, 4]} castShadow receiveShadow />
+        <instancedMesh
+          ref={baseRef}
+          args={[geometry, material, 4]}
+          castShadow
+          receiveShadow
+          onClick={(e) => e.stopPropagation()}
+        />
       </group>
 
       {/* Commode */}

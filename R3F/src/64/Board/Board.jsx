@@ -52,17 +52,20 @@ export default function Board() {
 
   const handleClick = (e) => {
     e.stopPropagation();
+
+    // gsap.killTweensOf(camera.position);
+
     if (isInView) {
       setCenterPosition(0, 0, 0);
       gsap.to(camera.position, {
-        duration: 2,
+        duration: 1,
         ...position,
         onComplete: () => setIsInView((prev) => !prev),
       });
     } else {
       setCenterPosition(0, -3, 2);
       gsap.to(camera.position, {
-        duration: 2,
+        duration: 1,
         ...position,
         y: position.y * 0.05,
         z: position.z * 0.3,
