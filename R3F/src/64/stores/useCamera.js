@@ -5,7 +5,7 @@ import { subscribeWithSelector } from 'zustand/middleware';
 export default create(
 	subscribeWithSelector((set) => {
 		return {
-			position: new THREE.Vector3(0, 6, 8),
+			position: new THREE.Vector3(0, 4, 6),
 		};
 	}),
 );

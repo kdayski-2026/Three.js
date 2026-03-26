@@ -5,7 +5,7 @@ import Controls from './Controls';
 export default function Experience() {
   return (
     <>
-      {/* <Perf position="top-left" /> */}
+      {import.meta.env.DEV && <Perf position="top-left" />}
 
       <Controls>
         <WorkSpace />

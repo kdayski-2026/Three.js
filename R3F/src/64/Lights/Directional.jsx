@@ -22,7 +22,7 @@ export default function Directional() {
         value: 10,
       },
       intensity: {
-        value: 6.8,
+        value: 1.5,
         min: 0,
         max: 10,
       },

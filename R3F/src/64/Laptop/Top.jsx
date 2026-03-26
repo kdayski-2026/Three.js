@@ -33,8 +33,8 @@ export default function Top({ top }) {
         gsap.to(camera.position, {
           duration: 2,
           ...position,
-          y: position.y * 0.25,
-          z: position.z * 0.5,
+          y: position.y * 0.1,
+          z: position.z * 0.4,
           ease: 'power2.out',
           onComplete: () => {
             setIsOpen(true);
@@ -81,20 +81,8 @@ export default function Top({ top }) {
         />
       )}
 
-      <primitive
-        rotation-x={Math.PI * 0.5}
-        object={top}
-        position={[0, -0.5, -0.345]}
-        scale={10}
-        onClick={toggleTop}
-      >
-        <Html
-          transform
-          scale={0.05}
-          wrapperClass="htmlScreen"
-          distanceFactor={1.96}
-          position={[0, 0.1, -0.004]}
-        >
+      <primitive rotation-x={Math.PI * 0.5} object={top} position={[0, -0.5, -0.345]} scale={10} onClick={toggleTop}>
+        <Html transform scale={0.05} wrapperClass="htmlScreen" distanceFactor={1.96} position={[0, 0.1, -0.004]}>
           {!loaded && isOpen && (
             <div className="loader-overlay">
               <div className="loader-circle" />

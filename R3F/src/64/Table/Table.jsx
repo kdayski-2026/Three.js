@@ -8,6 +8,7 @@ import useTable from '../stores/useTable.js';
 import useGeometry from '../stores/useGeometry.js';
 import useCamera from '../stores/useCamera.js';
 import useScenePosition from '../stores/useScenePosition.js';
+import Paper from '../Paper/Paper.jsx';
 
 export default function Table() {
   const commodeRef = useRef();
@@ -29,7 +30,7 @@ export default function Table() {
     },
     () => {
       setTextures(textures);
-    },
+    }
   );
 
   const { openEnable, roughness, metalness } = useControls('Table', {
@@ -121,7 +122,7 @@ export default function Table() {
     if (openEnable) {
       e.stopPropagation();
       if (commodeRef.current.position.z < 2.5) {
-        setCenterPosition(0, 0, -3);
+        setCenterPosition(1, 1, -3);
         gsap.to(commodeRef.current.position, {
           duration: 2,
           z: 5,
@@ -133,7 +134,7 @@ export default function Table() {
           duration: 2,
           ...position,
           y: position.y * 1,
-          z: position.z * 0.5,
+          z: position.z * 0.2,
         });
       } else {
         setCenterPosition(0, 0, 0);
@@ -161,7 +162,8 @@ export default function Table() {
 
       {/* Commode */}
       <group ref={commodeRef}>
-        <instancedMesh ref={commodeBodyRef} args={[geometry, material, 3]} receiveShadow />
+        <instancedMesh ref={commodeBodyRef} args={[geometry, material, 3]} receiveShadow onClick={commodeToggle} />
+        <Paper />
         {/* Front */}
         <mesh
           position={[0, -1.175, 4.075]}

@@ -24,25 +24,25 @@ export default function Controls({ children }) {
         max: 5,
       },
     },
-    { collapsed: true },
+    { collapsed: true }
   );
 
   useEffect(() => {
-    const handler = (e) => {
+    const cameraMove = (e) => {
       e.stopPropagation();
       if (e.pressure) lookTarget.current.set(0, 0, 0);
       else
         lookTarget.current.set(
           (e.x / window.innerWidth - 0.5) * movePower,
           -(e.y / window.innerHeight - 0.5) * movePower,
-          0,
+          0
         );
     };
 
-    document.addEventListener('pointermove', handler);
+    document.addEventListener('pointermove', cameraMove);
 
     return () => {
-      document.removeEventListener('pointermove', handler);
+      document.removeEventListener('pointermove', cameraMove);
     };
   }, [movePower]);
 
@@ -54,21 +54,13 @@ export default function Controls({ children }) {
   }, [mouseTrack]);
 
   useFrame((state, delta) => {
-    if (mouseTrack)
-      state.camera.lookAt(smoothedTargetPosition.lerp(lookTarget.current, delta * smoothPower));
+    if (mouseTrack) state.camera.lookAt(smoothedTargetPosition.lerp(lookTarget.current, delta * smoothPower));
   });
 
   return (
     <>
       {orbit && <OrbitControls makeDefault />}
-      <PresentationControls
-        global
-        polar={[-0.1, 0.3]}
-        azimuth={[-0.7, 0.7]}
-        damping={0.1}
-        snap
-        enabled={!orbit}
-      >
+      <PresentationControls global polar={[-0.1, 0.3]} azimuth={[-0.7, 0.7]} damping={0.1} snap enabled={!orbit}>
         {children}
       </PresentationControls>
     </>

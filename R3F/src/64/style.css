@@ -30,7 +30,11 @@
   animation: loader-spin 0.9s linear infinite;
 }
 
-#leva__root {
+html.env-dev #leva__root {
+  display: block;
+}
+
+html.env-prod #leva__root {
   display: none;
 }
 

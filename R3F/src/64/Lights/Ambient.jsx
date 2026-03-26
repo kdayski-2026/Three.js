@@ -4,7 +4,7 @@ export default function Ambient() {
   const { intensity, color } = useControls('Lights', {
     Ambient: folder({
       intensity: {
-        value: 1,
+        value: 0.15,
         min: 0,
         max: 5,
       },

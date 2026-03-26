@@ -10,49 +10,46 @@ export default function Spot() {
   const worldQuaternion = useMemo(() => new Quaternion(), []);
   const rotatedOffset = useMemo(() => new Vector3(), []);
   const targetOffset = useMemo(() => new Vector3(1, -3, 0), []);
-  const { position, color, intensity, power, distance, angle, penumbra, decay } = useControls(
-    'Lights',
-    {
-      Spot: folder({
-        color: '#FFD59E',
-        position: {
-          value: { x: -4.4, y: 4.75, z: -1 },
-        },
-        intensity: {
-          value: 16,
-          min: 0,
-          max: 200,
-        },
-        power: {
-          value: 800,
-          min: 0,
-          max: 2000,
-        },
-        distance: {
-          value: 12,
-          min: 0,
-          max: 100,
-        },
-        angle: {
-          value: 0.46,
-          min: 0,
-          max: 1,
-        },
-        penumbra: {
-          value: 0.5,
-          min: 0,
-          max: 10,
-          hint: 'Realistic value is 0.5',
-        },
-        decay: {
-          value: 2,
-          min: 0,
-          max: 10,
-          hint: 'Realistic value is 2',
-        },
-      }),
-    },
-  );
+  const { position, color, intensity, power, distance, angle, penumbra, decay } = useControls('Lights', {
+    Spot: folder({
+      color: '#FFD59E',
+      position: {
+        value: { x: -4.4, y: 4.75, z: -1 },
+      },
+      intensity: {
+        value: 16,
+        min: 0,
+        max: 200,
+      },
+      power: {
+        value: 300,
+        min: 0,
+        max: 2000,
+      },
+      distance: {
+        value: 12,
+        min: 0,
+        max: 100,
+      },
+      angle: {
+        value: 0.46,
+        min: 0,
+        max: 1,
+      },
+      penumbra: {
+        value: 0.5,
+        min: 0,
+        max: 10,
+        hint: 'Realistic value is 0.5',
+      },
+      decay: {
+        value: 2,
+        min: 0,
+        max: 10,
+        hint: 'Realistic value is 2',
+      },
+    }),
+  });
   // useHelper(spotLightRef, SpotLightHelper, 1);
   useFrame(() => {
     if (spotLightRef.current) {

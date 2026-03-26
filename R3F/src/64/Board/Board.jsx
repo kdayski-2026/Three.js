@@ -33,7 +33,7 @@ export default function Board() {
     },
     () => {
       setTextures(board);
-    },
+    }
   );
   const certs = useTexture([
     '/portfolio/certs/4.jpg',
@@ -149,8 +149,8 @@ export default function Board() {
               if (certs[idx]) certs[idx].colorSpace = SRGBColorSpace;
               return mat;
             })()}
-            material-metalness={0.7}
-            material-roughness={0.3}
+            material-metalness={0}
+            material-roughness={1}
             onClick={(e) => handleLink(e, idx)}
           />
         ))}
