@@ -47,7 +47,7 @@ export default function Smoke() {
         max: 1,
       },
       uTwistPower: {
-        value: 5,
+        value: 4,
         min: 0,
         max: 20,
       },

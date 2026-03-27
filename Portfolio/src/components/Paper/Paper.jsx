@@ -29,7 +29,7 @@ export default function Paper() {
     if (mesh.position.x === -3) {
       gsap.to(mesh.position, {
         duration: 1,
-        x: mesh.position.x + 4 + Math.random() * 4,
+        x: mesh.position.x + 4 + Math.random() * 3,
         z: mesh.position.z + (Math.random() - 0.5) * 0.5,
         ease: 'power4.out',
       });

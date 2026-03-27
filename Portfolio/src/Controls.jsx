@@ -3,11 +3,13 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { Vector3 } from 'three';
 import { useControls } from 'leva';
 import { useEffect, useRef, useState } from 'react';
+import useCamera from './stores/useCamera';
 
 export default function Controls({ children }) {
   const lookTarget = useRef(new Vector3());
   const [smoothedTargetPosition] = useState(() => new Vector3());
   const { camera } = useThree();
+  const isCameraMove = useCamera((state) => state.cameraMove);
   const { orbit, movePower, smoothPower, mouseTrack } = useControls(
     'Controls',
     {
@@ -54,7 +56,7 @@ export default function Controls({ children }) {
   }, [mouseTrack]);
 
   useFrame((state, delta) => {
-    if (mouseTrack)
+    if (mouseTrack && isCameraMove)
       state.camera.lookAt(smoothedTargetPosition.lerp(lookTarget.current, delta * smoothPower));
   });
 
@@ -64,7 +66,7 @@ export default function Controls({ children }) {
       <PresentationControls
         global
         polar={[-0.1, 0.3]}
-        azimuth={[-0.7, 0.7]}
+        azimuth={[-0.5, 0.5]}
         damping={0.1}
         snap
         enabled={!orbit}

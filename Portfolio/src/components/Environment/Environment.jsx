@@ -76,8 +76,8 @@ export default function Environment() {
     <group>
       {/* Back */}
       <mesh
-        position={[0, 4.4, -5]}
-        scale={[40, 20, 1]}
+        position={[10, 4.4, -5]}
+        scale={[60, 20, 1]}
         material={wallMaterial}
         geometry={geometry}
         receiveShadow
@@ -92,8 +92,8 @@ export default function Environment() {
       />
       {/* Floor */}
       <mesh
-        position={[0, -5.6, 5]}
-        scale={[40, 20, 1]}
+        position={[10, -5.6, 5]}
+        scale={[60, 20, 1]}
         rotation-x={Math.PI * -0.5}
         material={floorMaterial}
         geometry={geometry}

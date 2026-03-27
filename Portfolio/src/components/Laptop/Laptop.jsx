@@ -10,6 +10,7 @@ import useScenePosition from '../../stores/useScenePosition';
 export default function Laptop() {
   const [isOpen, setIsOpen] = useState(false);
   const position = useCamera((state) => state.position);
+  const setCameraMove = useCamera((state) => state.setCameraMove);
   const setCenterPosition = useScenePosition((state) => state.setPosition);
   const computer = useGLTF('./laptop/Low_Poly_Laptop.gltf');
   const { camera } = useThree();
@@ -38,8 +39,8 @@ export default function Laptop() {
       gsap.to(camera.position, {
         duration: 2,
         ...position,
-        y: position.y * 0.1,
-        z: position.z * 0.3,
+        y: position.y * 0.2,
+        z: position.z * 0.4,
         ease: 'power2.out',
       });
       gsap.to(top.rotation, {
@@ -47,11 +48,13 @@ export default function Laptop() {
         x: Math.PI * -0.05,
         onComplete: () => {
           setIsOpen(true);
+          setCameraMove(false);
         },
       });
     } else {
       setCenterPosition(0, 0, 0);
       setIsOpen(false);
+      setCameraMove(true);
       gsap.to(camera.position, {
         duration: 2,
         ...position,
