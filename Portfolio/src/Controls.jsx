@@ -21,9 +21,9 @@ export default function Controls({ children }) {
         max: 5,
       },
       smoothPower: {
-        value: 3.8,
+        value: 5,
         min: 0,
-        max: 5,
+        max: 20,
       },
     },
     { collapsed: true },
