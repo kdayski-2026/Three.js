@@ -1,5 +1,3 @@
-import { useGLTF } from '@react-three/drei';
-
 export default function Bottom({ bottom }) {
   return (
     <>
@@ -7,5 +5,3 @@ export default function Bottom({ bottom }) {
     </>
   );
 }
-
-useGLTF.preload('./macbook_model.gltf');
