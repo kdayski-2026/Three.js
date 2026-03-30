@@ -10,7 +10,7 @@ const YEARS = [
       { label: 'Prengi', href: 'https://prengi.vercel.app/', color: '#ffffff' },
       { label: 'Uber', href: 'https://uber-nine-cyan.vercel.app/', color: '#1eacc7' },
       { label: 'Yoga', href: 'https://yoga-sigma-ashy.vercel.app/', color: '#c78030' },
-      { label: 'GlobalOpt', href: 'https://global-opt-self.vercel.app/', color: '#ec644b' },
+      { label: 'Global Opt', href: 'https://global-opt-self.vercel.app/', color: '#ec644b' },
       { label: 'Pulse', href: 'https://pulse-three-ebon.vercel.app/', color: '#ffffff' },
     ],
   },
@@ -20,6 +20,21 @@ const YEARS = [
       {
         label: 'Robotics',
         href: 'https://robotics-front.vercel.app/',
+        color: '#ffffff',
+      },
+      {
+        label: 'Kick Lottery',
+        href: 'https://kick-lottery.vercel.app/',
+        color: '#ffffff',
+      },
+      {
+        label: 'Dao app',
+        href: 'dao-app-src.vercel.app/',
+        color: '#ffffff',
+      },
+      {
+        label: 'Weezi web',
+        href: 'https://weezi-web.vercel.app/',
         color: '#ffffff',
       },
     ],
@@ -69,22 +84,15 @@ export default function Frame() {
         rotation={[0, Math.PI, 0]}
         position={[0, 0.1, 0]}
       />
-      <Html
-        transform
-        scale={0.05}
-        wrapperClass="htmlScreen"
-        distanceFactor={1.96}
-        position={[0, 0.1, -0.004]}
-      >
+      <Html transform scale={0.05} wrapperClass="htmlScreen" distanceFactor={1.96} position={[0, 0.1, -0.004]}>
         {!link && (
           <div className="overlay" onClick={disableTopClick}>
             <div className="overlayContent">
               <div className="owner">
                 <div className="ownerName">Кальховен Игорь</div>
                 <div className="ownerDescription">
-                  Привет всем. Я разработчик игр. Хочу сделать сетевую игруху про поезда по типу
-                  DerailValey но с экономикой и поддержкой модов. Пишите свои предложения и
-                  пожелания буду очень признателен
+                  Привет всем. Я разработчик игр. Хочу сделать сетевую игруху про поезда по типу DerailValey но с
+                  экономикой и поддержкой модов. Пишите свои предложения и пожелания буду очень признателен
                 </div>
               </div>
               <div className="overlayMain">

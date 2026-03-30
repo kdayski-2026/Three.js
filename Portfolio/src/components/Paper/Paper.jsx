@@ -19,6 +19,14 @@ export default function Paper() {
     './paper/9.3.jpg',
     './paper/10.1.jpg',
     './paper/10.2.jpg',
+    './paper/11.1.jpg',
+    './paper/11.2.jpg',
+    './paper/12.1.jpg',
+    './paper/12.2.jpg',
+    './paper/13.1.jpg',
+    './paper/13.2.jpg',
+    './paper/14.1.jpg',
+    './paper/14.2.jpg',
   ]);
 
   const movePaper = (e) => {
