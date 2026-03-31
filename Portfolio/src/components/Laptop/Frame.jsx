@@ -29,7 +29,7 @@ const YEARS = [
       },
       {
         label: 'Dao app',
-        href: 'dao-app-src.vercel.app/',
+        href: 'https://dao-app-src.vercel.app/',
         color: '#ffffff',
       },
       {
