@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
@@ -12,6 +12,7 @@ import useMaterial from '../../stores/useMaterial.js';
 import Paper from '../../components/Paper/Paper.jsx';
 
 export default function Table() {
+  const [isOpen, setIsOpen] = useState(false);
   const commodeRef = useRef();
   const baseRef = useRef();
   const commodeBodyRef = useRef();
@@ -32,7 +33,7 @@ export default function Table() {
     },
     () => {
       setTextures(textures);
-    },
+    }
   );
 
   const { openEnable, roughness, metalness } = useControls('Table', {
@@ -123,8 +124,8 @@ export default function Table() {
   const commodeToggle = (e) => {
     if (openEnable) {
       e.stopPropagation();
-      // gsap.killTweensOf(commodeRef.current.position);
-      // gsap.killTweensOf(camera.position);
+      gsap.killTweensOf(commodeRef.current.position);
+      gsap.killTweensOf(camera.position);
       if (commodeRef.current.position.z < 2.5) {
         setCenterPosition(1, 1, -3);
         gsap.to(commodeRef.current.position, {
@@ -139,6 +140,7 @@ export default function Table() {
           ...position,
           y: position.y * 1,
           z: position.z * 0.2,
+          onStart: () => setIsOpen(true),
         });
       } else {
         setCenterPosition(0, 0, 0);
@@ -152,6 +154,7 @@ export default function Table() {
         gsap.to(camera.position, {
           duration: 2,
           ...position,
+          onComplete: () => setIsOpen(false),
         });
       }
     }
@@ -172,13 +175,8 @@ export default function Table() {
 
       {/* Commode */}
       <group ref={commodeRef}>
-        <instancedMesh
-          ref={commodeBodyRef}
-          args={[geometry, material, 3]}
-          receiveShadow
-          onClick={commodeToggle}
-        />
-        <Paper />
+        <instancedMesh ref={commodeBodyRef} args={[geometry, material, 3]} receiveShadow onClick={commodeToggle} />
+        <Paper visible={isOpen} />
         {/* Front */}
         <mesh
           position={[0, -1.175, 4.075]}

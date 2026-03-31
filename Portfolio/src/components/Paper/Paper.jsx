@@ -2,7 +2,7 @@ import gsap from 'gsap';
 import useGeometry from '../../stores/useGeometry';
 import { useTexture } from '@react-three/drei';
 
-export default function Paper() {
+export default function Paper({ visible }) {
   const geometry = useGeometry((state) => state.plane);
   const papers = useTexture([
     './paper/1.jpg',
@@ -119,10 +119,11 @@ export default function Paper() {
           rotation={[-Math.PI * 0.5, 0, Math.PI * (Math.random() - 0.5) * 0.05]}
           scale={[2.1 * 1.5, 2.97 * 1.5, 0.01]}
           position={[-3, -2.09 + (index + 1) * 0.01, 1.5]}
-          receiveShadow
+          receiveShadow={false}
           onClick={movePaper}
+          visible={visible}
         >
-          <meshStandardMaterial map={paper} roughness={1} metalness={0} />
+          <meshBasicMaterial map={paper} roughness={1} metalness={0} />
         </mesh>
       ))}
     </group>
