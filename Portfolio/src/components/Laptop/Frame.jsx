@@ -37,6 +37,16 @@ const YEARS = [
         href: 'https://weezi-web.vercel.app/',
         color: '#ffffff',
       },
+      {
+        label: 'Enoty',
+        href: 'https://enoty.vercel.app/',
+        color: '#533be2',
+      },
+      {
+        label: 'Bialliance',
+        href: 'https://bialliance.vercel.app/',
+        color: '#6c757d',
+      },
     ],
   },
 ];
