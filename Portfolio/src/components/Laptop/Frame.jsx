@@ -49,16 +49,21 @@ const YEARS = [
       },
     ],
   },
-  // {
-  //   year: 2023,
-  //   links: [
-  //     {
-  //       label: 'Robotics',
-  //       href: 'https://robotics-front.vercel.app/',
-  //       color: '#ffffff',
-  //     },
-  //   ],
-  // },
+  {
+    year: 2023,
+    links: [
+      {
+        label: 'Tymio',
+        href: 'https://tymio-landing.vercel.app/',
+        color: '#1c102f',
+      },
+      {
+        label: '0xCoin',
+        href: 'https://0xcoin-front.vercel.app/',
+        color: '#160042',
+      },
+    ],
+  },
 ];
 
 export default function Frame() {
