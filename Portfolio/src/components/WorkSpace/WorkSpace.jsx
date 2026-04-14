@@ -31,11 +31,11 @@ export default function WorkSpace() {
   useEffect(() => {
     const unsubscribeMoveScene = useScenePosition.subscribe(
       (state) => state.position,
-      (value) => value && moveScene(value),
+      (value) => value && moveScene(value)
     );
     const unsubscribeRotateScene = useScenePosition.subscribe(
       (state) => state.rotation,
-      (value) => value && rotateScene(value),
+      (value) => value && rotateScene(value)
     );
 
     return () => {

@@ -6,8 +6,10 @@ import gsap from 'gsap';
 import useGeometry from '../../stores/useGeometry';
 import useMaterial from '../../stores/useMaterial';
 import useLights from '../../stores/useLights';
+import { usePointerHover } from '../../hooks/useCanvasCursor';
 
 export default function Lamp() {
+  const { onPointerOver, onPointerOut } = usePointerHover();
   const lamp = useGLTF('./lights/desk_lamp_arm_01_1k.gltf');
   const box = useGeometry((state) => state.box);
   const basic = useMaterial((state) => state.basic);
@@ -64,12 +66,7 @@ export default function Lamp() {
 
   return (
     <group>
-      <primitive
-        scale={10}
-        rotation-y={rotation}
-        object={lamp.scene}
-        position={[position.x, position.y, position.z]}
-      />
+      <primitive scale={10} rotation-y={rotation} object={lamp.scene} position={[position.x, position.y, position.z]} />
       <mesh
         geometry={box}
         material={basic}
@@ -77,6 +74,8 @@ export default function Lamp() {
         scale={[2.1, 2.25, 2]}
         position={[position.x + 1.7, position.y + 6.95, position.z + 1]}
         onClick={spotLightToggle}
+        onPointerOver={onPointerOver}
+        onPointerOut={onPointerOut}
       />
       <mesh
         geometry={box}
@@ -86,6 +85,8 @@ export default function Lamp() {
         position={[position.x - 1.2, position.y + 2, position.z - 0.5]}
         rotation={[Math.PI * -0.1, 0, Math.PI * -0.8]}
         onClick={spotLightToggle}
+        onPointerOver={onPointerOver}
+        onPointerOut={onPointerOut}
       />
     </group>
   );

@@ -10,8 +10,10 @@ import useCamera from '../../stores/useCamera.js';
 import useScenePosition from '../../stores/useScenePosition.js';
 import useMaterial from '../../stores/useMaterial.js';
 import Paper from '../../components/Paper/Paper.jsx';
+import { usePointerHover } from '../../hooks/useCanvasCursor.js';
 
 export default function Table() {
+  const { onPointerOver, onPointerOut } = usePointerHover();
   const [isOpen, setIsOpen] = useState(false);
   const commodeRef = useRef();
   const baseRef = useRef();
@@ -175,7 +177,14 @@ export default function Table() {
 
       {/* Commode */}
       <group ref={commodeRef}>
-        <instancedMesh ref={commodeBodyRef} args={[geometry, material, 3]} receiveShadow onClick={commodeToggle} />
+        <instancedMesh
+          ref={commodeBodyRef}
+          args={[geometry, material, 3]}
+          receiveShadow
+          onClick={commodeToggle}
+          onPointerOver={isOpen && onPointerOver}
+          onPointerOut={isOpen && onPointerOut}
+        />
         <Paper visible={isOpen} />
         {/* Front */}
         <mesh
@@ -185,6 +194,8 @@ export default function Table() {
           geometry={geometry}
           material={material}
           onClick={commodeToggle}
+          onPointerOver={onPointerOver}
+          onPointerOut={onPointerOut}
         />
         {/* Handle */}
         <mesh
@@ -192,6 +203,8 @@ export default function Table() {
           scale={[0.1, 0.1, 0.1]}
           rotation={[-Math.PI * 0.5, Math.PI * 0.25, 0]}
           onClick={commodeToggle}
+          onPointerOver={onPointerOver}
+          onPointerOut={onPointerOut}
         >
           <cylinderGeometry args={[Math.PI * 0.5, Math.PI * 0.8, 4, 4]} />
           <meshStandardMaterial color="#C0C0C0" roughness={0.2} metalness={0.8} />

@@ -5,18 +5,12 @@ import gsap from 'gsap';
 import useScenePosition from '../../stores/useScenePosition';
 import { useThree } from '@react-three/fiber';
 import useCamera from '../../stores/useCamera';
-import {
-  Color,
-  LinearSRGBColorSpace,
-  MeshBasicMaterial,
-  MeshStandardMaterial,
-  RepeatWrapping,
-  SRGBColorSpace,
-} from 'three';
+import { MeshStandardMaterial, SRGBColorSpace } from 'three';
 import useBoard from '../../stores/useBoard';
-import useLights from '../../stores/useLights';
+import { usePointerHover } from '../../hooks/useCanvasCursor';
 
 export default function Board() {
+  const { onPointerOver, onPointerOut } = usePointerHover();
   const [isInView, setIsInView] = useState(false);
   const box = useGeometry((state) => state.box);
   const plane = useGeometry((state) => state.plane);
@@ -33,7 +27,7 @@ export default function Board() {
     },
     () => {
       setTextures(board);
-    },
+    }
   );
   const certs = useTexture([
     '/certs/4.jpg',
@@ -76,6 +70,16 @@ export default function Board() {
 
   const handleLink = (e, idx) => {
     e.stopPropagation();
+    if (!isInView) {
+      setCenterPosition(0, -3, 2);
+      gsap.to(camera.position, {
+        duration: 1,
+        ...position,
+        y: position.y * 0.05,
+        z: position.z * 0.3,
+        onComplete: () => setIsInView((prev) => !prev),
+      });
+    }
     window.open(links[idx], '_blank');
   };
 
@@ -136,6 +140,8 @@ export default function Board() {
         castShadow
         receiveShadow
         onClick={handleClick}
+        onPointerOver={onPointerOver}
+        onPointerOut={onPointerOut}
       />
 
       {/* Certs */}

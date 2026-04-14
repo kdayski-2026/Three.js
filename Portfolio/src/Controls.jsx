@@ -65,6 +65,7 @@ export default function Controls({ children }) {
       {orbit && <OrbitControls makeDefault />}
       <PresentationControls
         global
+        cursor={false}
         polar={[-0.1, 0.3]}
         azimuth={[-0.5, 0.5]}
         damping={0.1}

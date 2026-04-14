@@ -6,8 +6,10 @@ import { useMemo, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import useCamera from '../../stores/useCamera';
 import useScenePosition from '../../stores/useScenePosition';
+import { usePointerHover } from '../../hooks/useCanvasCursor';
 
 export default function Laptop() {
+  const { onPointerOver, onPointerOut } = usePointerHover();
   const [isOpen, setIsOpen] = useState(false);
   const position = useCamera((state) => state.position);
   const setCameraMove = useCamera((state) => state.setCameraMove);
@@ -35,12 +37,12 @@ export default function Laptop() {
     gsap.killTweensOf(top.rotation);
 
     if (top.rotation.x >= Math.PI * 0.25) {
-      setCenterPosition(0, -1.5, 0);
+      setCenterPosition(0, -1.75, 0);
       gsap.to(camera.position, {
         duration: 2,
         ...position,
-        y: position.y * 0.2,
-        z: position.z * 0.4,
+        y: position.y * 0.07,
+        z: position.z * 0.275,
         ease: 'power2.out',
       });
       gsap.to(top.rotation, {
@@ -68,7 +70,13 @@ export default function Laptop() {
   };
 
   return (
-    <group scale={1.5} position={[0, 3, 0]} onClick={zoomToLaptop}>
+    <group
+      scale={1.5}
+      position={[0, 3, 0]}
+      onClick={zoomToLaptop}
+      onPointerOver={onPointerOver}
+      onPointerOut={onPointerOut}
+    >
       <Top top={top} isOpen={isOpen} />
       <Bottom bottom={bottom} />
     </group>

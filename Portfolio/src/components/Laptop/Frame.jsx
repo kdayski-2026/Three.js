@@ -15,7 +15,7 @@ const YEARS = [
     ],
   },
   {
-    year: 2021,
+    year: '2021 - 2022',
     links: [
       {
         label: 'Robotics',
@@ -50,7 +50,7 @@ const YEARS = [
     ],
   },
   {
-    year: 2023,
+    year: '2023 - 2025',
     links: [
       {
         label: 'Tymio',
@@ -61,6 +61,16 @@ const YEARS = [
         label: '0xCoin',
         href: 'https://0xcoin-front.vercel.app/',
         color: '#160042',
+      },
+    ],
+  },
+  {
+    year: '2026',
+    links: [
+      {
+        label: 'This portfolio =D',
+        href: '#',
+        color: '#000000',
       },
     ],
   },
@@ -144,6 +154,11 @@ export default function Frame() {
                   <br />
                   Разработка Tymio - децентрализованный протокол, предназначенный для создания структурированных
                   финансовых продуктов в сфере криптовалют.
+                  <br />
+                  <br />
+                  2026 год.
+                  <br />
+                  Изучение и практика Three.js. Создал свое уникальное портфолио.
                 </div>
               </div>
               <div className="overlayMain">
