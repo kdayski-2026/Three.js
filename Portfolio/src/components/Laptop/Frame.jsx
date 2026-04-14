@@ -69,7 +69,7 @@ const YEARS = [
     links: [
       {
         label: 'This portfolio =D',
-        href: '#',
+        href: 'https://khalkhoven-igor-portfolio.vercel.app/',
         color: '#000000',
       },
     ],
